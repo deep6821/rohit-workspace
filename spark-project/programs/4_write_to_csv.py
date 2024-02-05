@@ -1,5 +1,6 @@
 from pyspark.sql import SparkSession
 
+
 spark = SparkSession.builder.appName('practise').getOrCreate()
 
 file_location = "dbfs:/FileStore/shared_uploads/rohit.pandey02@nagarro.com/sample.csv"

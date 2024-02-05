@@ -59,8 +59,11 @@ RDD’s are created primarily in two different ways,
 """
 
 from pyspark.sql import SparkSession
+
+
 # Create SparkSession
-spark = SparkSession.builder.master("local[1]").appName("SparkByExamples.com").getOrCreate()
+spark = SparkSession.builder.appName('practise').getOrCreate()
+
 print("Spark Session: ", spark_session, type(spark_session))
 
 dataList = data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]

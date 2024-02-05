@@ -1,3 +1,7 @@
+from pyspark.sql import SparkSession
+
+
+spark = SparkSession.builder.appName('practise').getOrCreate()
 file_location = r"C:\office\rohit-workspace\spark-project\inputs\querying-data.csv"
 df = spark.read.csv(file_location, header=True, inferSchema=True)
 

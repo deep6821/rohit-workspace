@@ -14,8 +14,10 @@ df1.join(df2, df1.key=df2.key, join_type)
 
 
 """
-spark = SparkSession.builder.appName('practise').getOrCreate()
+from pyspark.sql import SparkSession
 
+
+spark = SparkSession.builder.appName('practise').getOrCreate()
 employee_data = [
     (1, "Smith", -1, "2018", "10", "M", 3000),
     (2, "Rose", 1, "2010", "20", "M", 4000),

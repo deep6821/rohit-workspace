@@ -1,6 +1,7 @@
 from pyspark import SparkContext
 from pyspark.sql import SparkSession
 
+
 spark = SparkSession.builder.appName('practise').getOrCreate()
 employee_data = [
     {"emp_id": 1, "name": "Smith", "superior_emp_id": -1, "year_joined": "2018", "emp_dept_id": "10", "gender": "M", "salary": 3000},
