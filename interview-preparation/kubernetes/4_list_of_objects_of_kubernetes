@@ -1,0 +1,43 @@
+1. Mention the list of objects of Kubernetes?
+Objects that are used in Kubernetes are:
+a) Pods
+b) Replication sets and controllers
+c) Jobs and cron jobs
+d) Daemon sets
+e) Distinctive identities
+f) Deployments
+g) Stateful sets.
+
+2. Pods
+- A pod is a combination of single or multiple containers that logically run together on nodes.
+- There are two types of pods in Kubernetes:
+a) Single Container Pod: It can be created with the run command.
+b) Multicontainer pods: It can be created using the "create" command in Kubernetes.
+
+Single Container Pod: It can be created with the run command.
+Multicontainer pods: It can be created using the "create" command in Kubernetes.
+
+3. Explain Replica set
+A Replica set is used to keep replica pods stable. It enables us to specify the available number of identical pods.
+This can be considered a replacement for the replication .controller.
+
+4. Jobs and cron jobs
+
+5. Daemon sets
+Daemon sets are a set of pods that runs on a host. They are used for host layers attributes like monitoring
+network or simple network
+
+Daemon sets are used because:
+a) It enables to runs storage platforms like ceph and glusterd on each node.
+b) Daemon sets run the logs collection on every node such as filebeat or fluentd.
+c) It performs node monitoring on each and every node.
+
+6. Distinctive identities
+
+7. Deployments
+
+8. Stateful sets
+The stateful set is a workload API object that is used to manage the stateful application. It can also be used
+to manage the deployments and scaling the sets of pods. The state information and other data of stateful pods
+are store in the disk storage, which connects with stateful set.
+

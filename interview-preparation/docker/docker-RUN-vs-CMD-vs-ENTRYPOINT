@@ -1,0 +1,127 @@
+RUN: Run commands always executes command(s) in a new layer and creates a new image layer. Ex: It is often used for
+     installing software packages(Run apt-get install mysql)
+
+CMD: CMD commands allows to sets default command and/or parameter. This will be executed if you are run a particular
+     container without specifying some command, which can be overwritten from command line when docker container runs.
+
+ENTRYPOINT: Configures a container that will run as an executables. If you want to run a container with the condition
+            that a particular command is always executed, use ENTRYPOINT.
+
+
+
+Ways of writing above these commands.
+-------------------------------------
+1. Shell: <instruction> <command>
+2. Executables: <instruction> ["executable", "param1", "param2", ...]
+
+
+
+RUN:
+   Shell:
+      <instruction> <command>
+      Ex: RUN apt-get -y update
+   Executables:
+      <instruction> ["executable", "param1", "param2", ...]
+      Ex: RUN ["apt-get", "install", "apache2"]
+
+   1. Create Dockerfile:
+       From ubuntu
+       RUN apt-get -y update && apt-get -y install apache2
+
+       OR
+
+       From alpine
+       RUN apk add --force httpd
+
+   2. Build Docker Image: docker build -t <image name> .
+      Ex: docker build -t runalpine .
+      ----------------- After running above command -----------------
+      Sending build context to Docker daemon 2.048KB
+      Step 1/2: From alpine
+      latest: pulling from library/alpine
+      ba3557a56b15: Pull complete
+      Digest: sha256: -----------
+      Status: Downloaded newer image for alpine:latest
+      ---> 28f6e2705743
+      Step 2/2: RUn apk add --force httpd
+      ---> Running in bf69f778c2a5
+      fetch https://dl-cdn------------
+      fetch https://dl-cdn------------
+      OK: 6 MiB in 14 packages
+      Removing intermediate container -----
+      ---> -----
+      Successfully built ----
+      Successfully tagged runalpine:latest
+
+CMD:
+   Shell:
+      <instruction> <command> <param1, param2>
+      Ex: CMD echo "Hello World"
+   Executables:
+      <instruction> ["executable", "param1", "param2", ...]
+      Ex: CMD [/bin/echo", "Hello World"]
+
+    1. Create Dockerfile:
+        From alpine
+        CMD echo "Hello World"
+
+    2. Build Docker Image: docker build -t <image name> .
+      Ex: docker build -t cmdalpine .
+      ----------------- After running above command -----------------
+      Sending build context to Docker daemon 2.048KB
+      Step 1/2: From alpine
+      ---> 28f6e2705743
+      Step 2/2: CMD echo "Hello World"
+      ---> Running in bf69f778c2a5
+      Removing intermediate container -----
+      ---> -----
+      Successfully built ----
+      Successfully tagged cmdalpine:latest
+
+    3. Run Docker Container: docker run -it cmdalpine
+        Output: Hello World
+
+ENTRYPOINT:
+   Shell:
+      <instruction> <command> <param1, param2>
+      Ex: ENTRYPOINT echo "Hello"
+   Executables:
+      <instruction> ["executable", "param1", "param2", ...]
+      Ex: ENTRYPOINT [/bin/echo", "Hello"]
+
+   1. Create Dockerfile:
+        From alpine
+        ENTRYPOINT [/bin/echo", "Hello"]
+        CMD ["World"]
+
+    2. Build Docker Image: docker build -t <image name> .
+      Ex: docker build -t entryalpine .
+      ----------------- After running above command -----------------
+      Sending build context to Docker daemon 2.048KB
+      Step 1/2: From alpine
+      ---> 28f6e2705743
+      Step 2/2: ENTRYPOINT [/bin/echo", "Hello"]
+      ---> Running in bf69f778c2a5
+      Removing intermediate container -----
+      Step 3/3: CMD ["World"]
+      ---> Running in bf69f778c2a5
+      Removing intermediate container -----
+      ---> -----
+      Successfully built ----
+      Successfully tagged entryalpine:latest
+
+
+    3. Run Docker Container:
+    docker run -it entryalpine
+        Output: Hello World
+    docker run -it entryalpine rohit
+        Output: Hello rohit
+
+Difference b/w CMD and entrypoint: Entrypoint can not be changed but CMD can be changed
+
+
+
+
+
+
+

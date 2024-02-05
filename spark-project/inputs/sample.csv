@@ -1,0 +1,8 @@
+Name,Department,Age,Experience,Salary
+Rohit,Software Engineer,31,7,100000
+Adhyeta,Software Engineer,26,2,100000
+Adhyeta,Big Data Engineer,26,1,120000
+Rohit,Data Engineer,31,7,120000
+Parul,,26,,,
+,,,,150000
+

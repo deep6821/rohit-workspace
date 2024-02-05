@@ -1,0 +1,66 @@
+1. What is ContainerCreating pod?
+A ContainerCreating pod is one that can be scheduled on a node but can’t start up properly.
+
+2. What are federated clusters?
+Federated clusters multiple clusters that are managed as a single cluster.
+
+3. Define headless service
+Headless service is defined as a service that uses IP address, but instead of load balancing, it returns of
+associated pods.
+
+4. Define Heapster in Kubernetes
+A Heapster is a metrics collection and performance monitoring system for data that are collected by the Kublet.
+
+5. What are the tools that are used for container monitoring?
+a) Heapster
+b) cAdvisor
+c) Prometheus
+d) InfluxDB
+e) Grafana
+
+6. What are the ways to provide API-Security on Kubernetes?
+The ways to provide API-Security on Kubernetes are:
+a) Using correct auth mode with API server authentication mode= Node.
+b) Make kubeless that protects its API via authorization-mode=Webhook.
+c) Ensure the kube-dashboard uses a restrictive RBAC (Role-Based Access Control) policy
+
+7. What is the work of a kube-scheduler?
+Kube-scheduler is the default scheduler for Kubernetes. It assigns nodes to newly created pods.
+
+8. Why uses Kube-apiserver?
+Kube-apiserver is an API server of Kubernetes that is used to configure and validate API objects, which include
+services, controllers, etc. It provides the frontend to the cluster's shared region using which components
+interact with each other.
+
+9. What is the work of a kube-scheduler?
+Kube-scheduler is the default scheduler for Kubernetes. It assigns nodes to newly created pods.
+
+10. Define kubelet
+The kubelet is a service agent which controls and maintains group pf pods by checking pod specification using
+Kubernetes. The kubelet runs on each node and allows to communicate between a master node and a slave node.
+
+11. Define OpenShift
+OpenShift is a public cloud application development and hosting platform developed by Red Hat.
+It offers automation for management so that developers can focus on writing the code.
+
+12. What are the objectives of the replication controller?
+The objectives of the replication controller are:
+a) It is responsible for controlling and administering the pod lifecycle.
+b) It monitors and verifies whether the allowed number of replicas are running or not.
+c) The replication controller helps the user to check the pod status.
+d) It enables to alter a pod. The user can drag its position the way interested in it.
+
+
+13. List out some important Kubectl commands
+The important Kubectl commands are:
+a) kubectl annotate
+b) kubectl cluster-info
+c) kubectl attach
+d) kubectl apply
+e) kubectl config
+f) kubectl autoscale
+g) kubectl config current-context
+h) kubectl config set.
+
+
+

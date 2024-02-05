@@ -1,0 +1,61 @@
+1. Is Django a CMS?
+
+- Django is not a CMS (content-management-system) . It is just a Web framework, a tool that allows you to build
+websites.
+
+2. Does Django support NoSQL?
+
+- NoSQL basically stands for “not only SQL”. This is considered as an alternative to the traditional RDBMS or the
+relational Databases.
+- Officially, Django does not support NoSQL databases. However, there are third-party projects, such as Django
+non-rel, that allow NoSQL functionality in Django. Currently, you can use MongoDB and Google App Engine.
+
+3. What should be done in case you get a message saying “Please enter the correct username and password” even
+after entering the right details to log in to the admin section?
+
+- In case you have entered the right details and still not able to login to the admin site, cross verify if the
+user account has is_active and is_staff attributes set to True.
+- The admin site allows only those users for whom these values are set to True.
+
+4. What should be done in case you are not able to log in even after entering the right details and you get no
+error message?
+
+- In this case, the login cookie is not being set rightly. This happens if the domain of the cookie sent out by
+Django does not match the domain in your browser.
+- For this, you must change the SESSION_COOKIE_DOMAIN setting to match that of your browser.
+
+5. How can you limit admin access so that the objects can only be edited by those users who have created them?
+
+- Django’s ModelAdmin class provides customization hooks using which, you can control the visibility and
+editability of objects in the admin.
+- To do this, you can use the get_queryset() and has_change_permission().
+
+6. What to do when you don’t see all objects appearing on the admin site?
+
+- Inconsistent row counts are a result of missing Foreign Key values or if the Foreign Key field is set to
+null=False.
+- If the ForeignKey points to a record that does not exist and if that foreign is present in the list_display
+method, the record will not be shown the admin changelist.
+
+7. What do you mean by the csrf_token?
+
+- The csrf_token is used for protection against Cross-Site Request Forgeries.
+- This kind of attack takes place when a malicious website consists of a link, some JavaScript or a form whose
+aim is to perform some action on your website by using the login credentials of a genuine user.
+
+8. Does Django support multiple-column Primary Keys?
+
+- No. Django only supports single-column Primary Keys.
+
+9. How can you see the raw SQL queries that Django is running?
+
+- First, make sure that your DEBUG setting is set to True. Then, type the following commands:
+1. from django.db import connection
+2. connection.queries
+
+10. How to make a variable available to all the templates?
+
+- You can make use of the RequestContext in case all your templates require the same objects, such as, in the
+case of menus.
+- This method takes an HttpRequest as its first parameter and it automatically populates the context with a few
+variables, according to the engine’s context_processors configuration option.

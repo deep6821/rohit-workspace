@@ -1,0 +1,9 @@
+# To Create a Directory
+dbutils.fs.mkdirs("dbfs:/FileStore/shared_uploads/input/")
+
+# To Delete a Directory Recursively
+dbutils.fs.rm('dbfs:/input',True)
+
+
+
+

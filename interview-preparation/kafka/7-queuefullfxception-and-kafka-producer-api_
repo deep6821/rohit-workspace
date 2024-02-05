@@ -1,0 +1,13 @@
+1. In the Producer, when does QueueFullException occur?
+
+- Whenever the Kafka Producer attempts to send messages at a pace that the Broker cannot handle at that time
+QueueFullException typically occurs.
+
+- However, to collaboratively handle the increased load, users will need to add enough brokers, since the Producer
+doesn’t block.
+
+2. Explain the role of the Kafka Producer API.
+
+- An API which permits an application to publish a stream of records to one or more Kafka topics is what we call
+Producer API.
+

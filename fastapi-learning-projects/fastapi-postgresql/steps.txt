@@ -1,0 +1,28 @@
+https://github.com/nf1s/fastapi_sqlalchemy_alembic
+
+1. Create directory. Ex- fastapi_sqlalchemy_alembic
+2. Create main.py
+3. Create Dockerfile
+4. Create docker-compose.yml
+5. Run: docker-compose build
+6. Run: alembic init alembic
+7. Open alembic.ini file and replace sqlalchemy.url = 
+8. Add the postgres db url in the alembic/env.py file
+9. Add DATABASE_URL = postgresql+psycopg2://postgres:postgres@db:5432 in .env file (
+   same credentials as docker-compose.yml)
+10. Create models.py
+11. Run: docker-compose run web alembic revision --autogenerate -m "First migration"
+12. For any changes : docker-compose down && docker-compose up -d
+13. Run: docker-compose run web alembic upgrade head
+14: In order to check our created migrations
+ a) Run: docker-compose up
+ b) Go to localhost:5050
+ c) Login with user=pgadmin4@pgadmin.org and password=admin
+ d) Register server (host name: db, database: test_db, username/password: postgres)
+15. Create schema.py
+16. Update main.py file
+
+17. Run: docker-compose up
+
+
+

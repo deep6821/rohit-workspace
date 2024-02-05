@@ -1,0 +1,13 @@
+1. What is the kafka?
+
+- Apache Kafka is a publish-subscribe open source message broker application.
+- This messaging application was coded in “Scala”. Basically, this project was started by the Apache software.
+- Kafka’s design pattern is mainly based on the transactional logs design.
+
+2. Enlist the several components in Kafka.
+
+a) Topic: Kafka Topic is the bunch or a collection of messages.
+b) Producer: In Kafka, Producers issue communications as well as publishes messages to a Kafka topic.
+c) Consumer: Kafka Consumers subscribes to a topic(s) and also reads and processes messages from the topic(s).
+d) Brokers: While it comes to manage storage of messages in the topic(s) we use Kafka Brokers.
+

@@ -1,0 +1,99 @@
+Since Spark 2.0, SparkSession has become an entry point to Spark to work with RDD, DataFrame, and Dataset.
+Prior to 2.0, SparkContext used to be an entry point.
+
+What is SparkSession?
+---------------------
+SparkSession introduced in version Spark 2.0, It is an entry point to underlying Spark functionality in order to
+programmatically create Spark RDD, DataFrame and DataSet.
+
+SparkSession’s object spark is default available in spark-shell and it can be created programmatically using
+SparkSession builder pattern.
+
+With Spark 2.0 a new class org.apache.spark.sql.SparkSession has been introduced to use which is a combined class for
+all different contexts we used to have prior to 2.0 (SQLContext and HiveContext e.t.c) release hence Spark Session can
+be used in replace with SQLContext, HiveContext and other contexts defined prior to 2.0.
+
+As mentioned in the beginning SparkSession is an entry point to Spark and creating a SparkSession instance would be the
+first statement you would write to program with RDD, DataFrame and Dataset. SparkSession will be created using
+SparkSession.builder() builder patterns.
+
+*** Though SparkContext used to be an entry point prior to 2.0, It is not completely replaced with SparkSession, many
+features of SparkContext are still available and used in Spark 2.0 and later SparkSession internally creates SparkConfig
+and SparkContext with the configuration provided with SparkSession ***
+
+Spark Session also includes all the APIs available in different contexts:
+1. Spark Context,
+2. SQL Context,
+3. Streaming Context,
+4. Hive Context.
+
+*** You can create as many SparkSession objects you want using either SparkSession.builder or SparkSession.newSession.
+
+Ex:
+spark = SparkSession.builder()
+      .master("local[1]")
+      .appName("SparkByExamples.com")
+      .getOrCreate()
+
+master() – If you are running it on the cluster you need to use your master name as an argument to master(). usually,
+it would be either yarn or mesos depends on your cluster setup.
+
+Use local[x] when running in Standalone mode. x should be an integer value and should be greater than 0; this represents
+how many partitions it should create when using RDD, DataFrame, and Dataset. Ideally, x value should be the number of
+CPU cores you have.
+
+appName() – Used to set your application name.
+
+getOrCreate() – This returns a SparkSession object if already exists, creates new one if not exists.
+
+
+Note:  SparkSession object “spark” is by default available in PySpark shell.
+
+You can also create a new SparkSession using newSession() method.
+import pyspark
+from pyspark.sql import SparkSession
+sparkSession3 = SparkSession.newSession
+========================================================================================================================
+SparkSession commonly used methods:
+-----------------------------------
+version – Returns Spark version where your application is running, probably the Spark version you cluster is configured
+with.
+
+builder() – builder() is used to create a new SparkSession, this return SparkSession.Builder
+
+createDataFrame() – This creates a DataFrame from a collection and an RDD
+
+createDataset() – This creates a Dataset from the collection, DataFrame, and RDD.
+
+emptyDataFrame() – Creates an empty DataFrame.
+
+emptyDataset() – Creates an empty Dataset.
+
+getActiveSession() – returns an active Spark session.
+
+implicits() – You can access the nested Scala object.
+
+read() – Returns an instance of DataFrameReader class, this is used to read records from csv, parquet, avro and more
+file formats into DataFrame.
+
+readStream() – Returns an instance of DataStreamReader class, this is used to read streaming data. that can be used to
+read streaming data into DataFrame.
+
+sparkContext() – Returns a SparkContext.
+
+sql – Returns a DataFrame after executing the SQL mentioned.
+
+sqlContext() – Returns SQLContext.
+
+stop() – Stop the current SparkContext.
+
+table() – Returns a DataFrame of a table or view.
+
+udf() – Creates a Spark UDF to use it on DataFrame, Dataset and SQL.
+
+
+
+
+
+
+

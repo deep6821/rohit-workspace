@@ -1,0 +1,10 @@
+- Divide and conquer is an algorithmic paradigm in which the problem is
+repeatedly divided into sub-problems until we reach a point where each problem
+is similar and atomic, i.e., can’t be further divided. At this point, we start
+solving these atomic problems and combining (merging) the solutions.
+
+- So, divide and conquer solutions have the following three steps:
+1. Divide
+2. Conquer
+3. Merge
+

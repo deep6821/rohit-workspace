@@ -1,0 +1,34 @@
+Table: Table is a preliminary storage for storing data and information in RDBMS. A table is a collection
+of related data entries, and it consists of columns and rows.
+
+View: A view is a virtual table. A view consists of rows and columns just like a table. The difference
+between a view and a table is that views are definitions built on top of other tables (or views),  and
+do not hold data themselves. If data is changing in the underlying table, the same change is reflected
+in the view. A view can be built on top of a single table or multiple tables. It  can also be built on
+top of another view.
+
+What is the use of view?
+------------------------
+What if we must restrict a user from accessing some attributes of the table and let access the other
+attributes. Like, a clerk in an administrative department can search the name, address, designation,
+age and such other factors of an employee table. But he must not be authorized to view or access the
+salary of any employee. In such cases, we must be able to create a virtual table that can only display
+the required attributes from a table. This is possible via View and Materialized View
+
+
+Difference between Table and View:
+----------------------------------
+The main difference between Table and View is  A table contains data, a view is just a SELECT statement
+which has been saved in the database (more or less, depending on your database).
+
+Views offer the following advantages:
+1. Ease of use: The advantage of a view is that it can join data from several tables thus creating a new
+view of it. Say you have a database with salaries, and you need to do some complex statistical queries on
+it. Instead of sending the complex query to the database all the time, you can save the query as a view
+and then SELECT * FROM view
+
+2. Space savings: Views takes very little space to store, since they do not store actual data.
+
+3. Additional data security: Views can include only certain columns in the table so that only the
+non-sensitive columns are included and exposed to the end user. In addition, some databases allow views
+to have different security settings, thus hiding sensitive data from prying eyes.

@@ -1,0 +1,41 @@
+Encoding :
+-------------------------------------------------------------------------------
+In the Encoding method, data is transformed from one form to another. The main aim of encoding is to transform data
+into a form that is readable by most of the systems or that can be used by any external process. It can’t be used
+for securing data, various publicly available algorithms are used for encoding.
+
+Encoding can be used for reducing the size of audio and video files. Each audio and video file format has a
+corresponding coder-decoder (codec) program that is used to code it into the appropriate format and then decodes
+for playback.
+
+Example: ASCII, BASE64, UNICODE
+
+Encryption :
+-------------------------------------------------------------------------------
+Encryption in encoding technique in which message is encoded by using encryption algorithm in such a way that only
+authorized personnel can access the message or information.
+
+It is a special type of encoding that is used for transferring private data, for example sending a combination of
+username and password over the internet for email login.
+
+In encryption, data to be encrypted(called plain-text) is transformed using an encryption algorithm like "AES"
+encryption or "RSA" encryption using a secret key called cipher. The encrypted data is called cipher-text, and
+finally, the secret key can be used by the intended recipient to convert it back to plain-text.
+
+** There are two types of encryption algorithms – symmetric and asymmetric encryption.**
+In case of symmetric encryption data is encoded and decoded with the help of same key, for example AES encryption
+algorithm but in case of asymmetric encryption algorithm, data is encrypted with help of two keys, namely public
+and private key, for example. RSA algorithm
+
+Hashing :
+-------------------------------------------------------------------------------
+In hashing, data is converted to the hash using some hashing function, which can be any number generated from
+string or text. Various hashing algorithms are MD5, SHA256. Data once hashed is non-reversible.
+
+Hash function can be any function that is used to map data of arbitrary size to data of fixed size. The data
+structure hash table is used for storing of data.
+
+For example: When you send pictures and text messages over WhatsApp over StackOverflow(posting in questions),
+images are sent to different server and text is sent to a different server for efficiency purposes. So for
+verifying images that the images are not tampered in between data transfer over the internet, hashing algorithm
+like MD5 can be used.

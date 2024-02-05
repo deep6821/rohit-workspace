@@ -1,0 +1,8 @@
+Time Complexity: is a function describing the amount of time an algorithm takes in terms of the amount
+of input to the algorithm. In layman’s terms, We can say time complexity is sum of number of times each
+statements gets executed.
+
+Space Complexity: is a function describing the amount of memory (space) an algorithm takes in terms of the
+amount of input to the algorithm. When we say “this algorithm takes constant extra space,” because the
+amount of extra memory needed doesn’t vary with the number of items processed.
+

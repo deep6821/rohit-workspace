@@ -1,0 +1,83 @@
+Source: https://www.educative.io/blog/multithreading-and-concurrency-fundamentals
+
+What is multithreading?
+Why use multithreading?
+Issues involved with multiple threads and How to avoid issues with multiple threads.
+
+1. What is multithreading?
+--------------------------
+Multithreading is a technique that allows for concurrent execution of two or more parts of a
+program for maximum utilization of a CPU. As a really basic example, multithreading allows you to write code
+in one program and listen to music in another. Programs are made up of processes and threads. You  can think
+of it like this:
+
+a) A program is an executable file like chrome.exe
+b) A process is an executing instance of a program. When you double click on the Google Chrome icon on your
+computer, you start a process which will run the Google Chrome program.
+c) Thread is the smallest executable unit of a process. A process can have multiple threads with one main
+thread. In the example, a single thread could be displaying the current tab you’re in, and a different thread
+could be another tab.
+
+Example: Think about a single processor that is running your IDE. Say you edit one of your code files and
+click save. When you click save, it will initiate a workflow which will cause bytes to be written out to the
+underlying physical disk. However, IO is an expensive operation, and the CPU will be idle while bytes are
+being written out to the disk.
+
+While IO takes place, the idle CPU could work on something useful and here is where threads come in - the IO
+thread is switched out and the UI thread gets scheduled on the CPU so that if you click elsewhere on the
+screen, your IDE is still responsive and does not appear hung or frozen.
+
+Threads can give the illusion of multitasking even though at any given point in time the CPU is executing
+only one thread. Each thread gets a slice of time on the CPU and then gets switched out either because it
+initiates a task which requires waiting and not utilizing the CPU or it completes its time slot on the CPU.
+There are many more nuances and intricacies on how thread scheduling works but this forms the basis of it.
+
+With advances in hardware technology, it is now common to have multi-core machines. Applications can take
+advantage of these architectures and have a dedicated CPU run each thread.
+
+2. Why use multithreading?
+-------------------------
+With the introduction of multiple cores, multithreading has become extremely important in terms of the
+efficiency of your application. With multiple threads and a single core, your application would have to
+transition back and forth to give the illusion of multitasking.
+
+With multiple cores, your application can take advantage of the underlying hardware to run individual threads
+through a dedicated core, thus making your application more responsive and efficient. Again, multithreading
+basically allows you to take full advantage of your CPU and the multiple cores, so you don’t waste the extra
+horsepower.
+
+Developers should make use of multithreading for a few reasons:
+a) Higher throughput
+b) Responsive applications that give the illusion of multitasking.
+c) Efficient utilization of resources. Thread creation is light-weight in comparison to spawning a brand new
+process and for web servers that use threads instead of creating a new process when fielding web requests,
+consume far fewer resources.
+
+Note: You can’t continually add threads and expect your application to run faster. More threads means more
+problems, and you must carefully and thoughtfully design how they will work together. It may even be in some
+cases that you want to avoid multithreading altogether, especially when your application performs a lot of
+sequential operations.
+
+3. How to avoid issues with multiple threads:
+--------------------------------------------
+How to avoid deadlocks?
+a) Avoid Nested Locks: This is the main reason for deadlock. Deadlock mainly happens when we give locks to
+multiple threads. Avoid giving locks to multiple threads if you already have given to one.
+b) Avoid Unnecessary Locks: You should lock only those members which are required. Having unnecessary locks
+can lead to a deadlock. As a best practice, try to reduce the need to lock things as much as you can.
+
+How to avoid race conditions?
+Race conditions occur within the critical section of your code. These can be avoided with proper thread
+synchronization within critical sections by using techniques like locks, atomic variables, and message
+passing.
+
+How to avoid starvation?
+The best way to avoid starvation is to use a lock such as ReentrantLock or a mutex. This introduces a “fair”
+lock which favors granting access to the thread that has been waiting longest. If you wanted to have
+multiple threads run at once while preventing starvation, you can use a semaphore.
+
+How to avoid livelocks?
+Livelocks can be avoided by making use of ReentrantLock as a way to determine which thread has been waiting
+longer so that you can assign it a lock. As a best practice, don’t block locks; if a thread can’t acquire a
+lock, it should release previously acquired locks to try again later.
+

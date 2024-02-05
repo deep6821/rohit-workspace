@@ -1,0 +1,6 @@
+Django admin:
+-------------
+
+django-admin is the command-line utility of Django for administrative tasks. Using the django-admin you can
+perform a number of tasks some of which are listed out in the following table:
+

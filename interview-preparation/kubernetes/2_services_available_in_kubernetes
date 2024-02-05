@@ -1,0 +1,44 @@
+1. List various services available in Kubernetes
+Various services available in Kubernetes are:
+a) Cluster IP service
+b) Load Balancer service
+c) Node Port service
+d) External Name Creation service.
+
+2. Cluster IP service
+The Cluster IP is a Kubernetes service that offers a service inside the cluster that other apps inside cluster
+can access.
+
+3. Load Balancer service
+A load balancer is needed because it gives a standard way to distribute network traffic among different services,
+which runs in the backend.
+
+
+4. Node Port service
+A node the smallest unit of hardware. It defines a single machine in a cluster that can be a virtual machine from
+a cloud provider or physical machine in the data center. Every machine available in the Kubernetes cluster can
+substitute other machines.
+
+5. External Name Creation service.
+
+6. There are three components of Kubernetes, they are:
+a) Addons
+b) Node components
+c) Master Components
+
+6. Define Kubernetes controller manager
+The controller manager is a daemon used for garbage collection, core control loops, and namespace creation.
+It enables the running of more than one process on the master node.
+Types of controller managers are:
+a) endpoints controller
+b) service accounts controller,
+c) node controller
+d) namespace controller
+e) replication controller
+e) token controller
+
+
+
+
+
+

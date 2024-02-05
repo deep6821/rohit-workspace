@@ -1,0 +1,13 @@
+1. What is GKE?
+GKE or Google Container Engine is a management platform that supports clusters and Docker containers that
+run within public cloud services of Google.
+
+2. Mention the uses of GKE
+The uses of the GKE (Google Kubernetes Engine) are:
+
+a) It can be used to create docker container clusters
+b) Resize application controllers
+c) Update and then upgrade the clusters of container
+d) Debug cluster of the container.
+e) GKE can be used to creates a replication controller, jobs, services, container pods, or load balancer.
+

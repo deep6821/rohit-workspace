@@ -1,0 +1,65 @@
+1. What is the OSI reference model?
+Answer: Open System Interconnection, the name itself suggests that it is a
+        reference model that defines how applications can communicate with each
+        other over a networking system.
+
+It also helps to understand the relationship between networks and defines the
+process of communication in a network.
+
+2. What are the layers in OSI Reference Models? Describe each layer briefly?
+Answer: Given below are the seven layers of OSI Reference Models:
+
+a) Physical Layer (Layer 1): It converts data bits into electrical impulses or
+radio signals.
+Example: Ethernet.
+
+b) Data Link Layer (Layer 2): At the Data Link layer, data packets are encoded
+and decoded into bits and it provides a node to node data transfer. This layer
+also detects the errors that occurred at Layer 1.
+
+c) Network Layer (Layer 3): This layer transfers variable length data sequence
+from one node to another node in the same network. This variable-length data
+sequence is also known as “Datagrams”.
+
+d) Transport Layer (Layer 4): It transfers data between nodes and also provides
+acknowledgment of successful data transmission. It keeps track of transmission
+and sends the segments again if the transmission fails.
+
+e) Session Layer (Layer 5): This layer manages and controls the connections
+between computers. It establishes, coordinates, exchange and terminates the
+connections between local and remote applications.
+
+f) Presentation Layer (Layer 6): It is also called as “Syntax Layer”. Layer 6
+transforms the data into the form in which the application layer accepts.
+
+g) Application Layer (Layer 7): This is the last layer of the OSI Reference
+Model and is the one that is close to the end-user. Both end-user and
+application layer interacts with the software application. This layer provides
+services for email, file transfer, etc.
+
+3. What is the difference between Hub, Switch, and Router?
+
+4. Explain TCP/IP Model
+Answer: The most widely used and available protocol is TCP/IP i.e.
+        Transmission Control Protocol and Internet Protocol. TCP/IP specifies
+        how data should be packaged, transmitted and routed in their end to end
+        data communication.
+
+Given below is a brief explanation of each layer:
+Application Layer: This is the top layer in the TCP/IP model. It includes
+processes that use the Transport Layer Protocol to transmit the data to their
+destination. There are different Application Layer Protocols such as HTTP, FTP,
+SMTP, SNMP protocols, etc.
+
+Transport Layer: It receives the data from the Application Layer which is above
+the Transport Layer. It acts as a backbone between the host's system connected
+with each other and it mainly concerns about the transmission of data. TCP and
+UDP are mainly used as Transport Layer protocols.
+
+Network or Internet Layer: This layer sends the packets across the network.
+Packets mainly contain source & destination IP addresses and actual data to be
+transmitted.
+
+Network Interface Layer: It is the lowest layer of the TCP/IP model. It
+transfers the packets between different hosts. It includes encapsulation of IP
+packets into frames, mapping IP addresses to physical hardware devices, etc.

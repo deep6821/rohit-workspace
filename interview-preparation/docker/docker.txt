@@ -1,0 +1,12 @@
+- Docker can build images automatically by reading the instructions from a Dockerfile.
+
+- A Dockerfile must begin with a From Instruction. The From instruction specifies the parent image from which
+ you are building.
+
+- The images is usually built by executing Docker instruction, which adds layers on top of existing images.
+
+- The final docker image can be considered as a layered structure where there is a core or a base image and on the top
+  of that, there are several layered intermediate images.
+
+------------------------------------------------------------------------------------------------------------------------
+

@@ -1,0 +1,66 @@
+Events:
+-------
+An event represents a fact that happened in the past. Events are immutable and never stay in one place.
+They always travel from one system to another system, carrying the state changes that happened.
+
+Streams:
+--------
+An event stream represents related events in motion.
+
+Topics:
+-------
+When an event stream enters Kafka, it is persisted as a topic. In Kafka’s universe, a topic is a
+materialized event stream. In other words, a topic is a stream at rest.
+
+Topic groups related events together and durably stores them. The closest analogy for a Kafka topic is a
+table in a database or folder in a file system. Topics are the central concept in Kafka that decouples
+producers and consumers. A consumer pulls messages off of a Kafka topic while producers push messages into
+a Kafka topic. A topic can have many producers and many consumers.
+
+Partitions:
+-----------
+Kafka’s topics are divided into several partitions. While the topic is a logical concept in Kafka, a
+partition is the smallest storage unit that holds a subset of records owned by a topic. Each partition is
+a single log file where records are written to it in an append-only fashion. When talking about the
+content inside a partition, I will use the terms record and message interchangeably.
+
+Offsets and the ordering of messages:
+-------------------------------------
+The records in the partitions are each assigned a sequential identifier called the offset, which is unique
+for each record within the partition.
+
+The offset is an incremental and immutable number, maintained by Kafka. When a record is written to a
+partition, it is appended to the end of the log, assigning the next sequential offset. Offsets are
+particularly useful for consumers when reading records from a partition. We’ll come to that at a later
+point.
+
+Although the messages within a partition are ordered, messages across a topic are not guaranteed to be
+ordered.
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Partitions are the way that Kafka provides scalability:
+*******************************************************
+A Kafka cluster is made of one or more servers. In the Kafka universe, they are called Brokers. Each
+broker holds a subset of records that belongs to the entire cluster.
+
+Kafka distributes the partitions of a particular topic across multiple brokers. By doing so, we’ll get
+the following benefits.
+1. If we are to put all partitions of a topic in a single broker, the scalability of that topic will be
+   constrained by the broker’s IO throughput. A topic will never get bigger than the biggest machine in
+   the cluster. By spreading partitions across multiple brokers, a single topic can be scaled horizontally
+   to provide performance far beyond a single broker’s ability.
+2. A single topic can be consumed by multiple consumers in parallel. Serving all partitions from a single
+   broker limits the number of consumers it can support. Partitions on multiple brokers enable more
+   consumers.
+3. Multiple instances of the same consumer can connect to partitions on different brokers, allowing very
+   high message processing throughput. Each consumer instance will be served by one partition, ensuring
+   that each record has a clear processing owner.
+
+Partitions are the way that Kafka provides redundancy:
+******************************************************
+Kafka keeps more than one copy of the same partition across multiple brokers. This redundant copy is
+called a replica. If a broker fails, Kafka can still serve consumers with the replicas of partitions
+that failed broker owned.
+
+Partition replication is complex, and it deserves its own post. Next time maybe?

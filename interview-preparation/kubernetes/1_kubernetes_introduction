@@ -1,0 +1,68 @@
+1) What is Kubernetes?
+- Kubernetes is a container management system developed in the Google platform. The purpose of kubernetes is to
+  manage a containerized application in various types of physical, virtual, and cloud environments.
+- Google Kubernetes is a highly flexible container tool to deliver even complex applications, consistently.
+- Applications run on clusters of hundreds to thousands of individual servers.
+
+2) Why use Kubernetes?
+- Kubernetes can run on-premises bare metal, OpenStack, public clouds Google, Azure, AWS, etc.
+- It helps you to avoid vendor lock issues as it can use any vendor-specific APIs or services except where
+Kubernetes provides an abstraction, e.g., load balancer and storage.
+- It will enable applications that need to be released and updated without any downtime.
+- Kubernetes allows you to assure those containerized apps run where and when you want and help you to find
+resources and tools which you want to work.
+
+3) What are the features of Kubernetes?
+The features of Kubernetes are:
+1. Automated Scheduling
+2. Self-Healing Capabilities
+3. Automated rollouts & rollback
+4. Horizontal Scaling & Load Balancing
+5. Offers environment consistency for development, testing, and production
+6. Infrastructure is loosely coupled to each component can act as a separate unit
+7. Provides a higher density of resource utilization
+8. Offers enterprise-ready features
+9. Application-centric management
+10. Auto-scalable infrastructure
+11. You can create predictable infrastructure
+
+4) Explain Kubernetes Architecture
+a) Master Node: The master node is the first and most vital component which is responsible for the management of
+Kubernetes cluster. It is the entry point for all kinds of administrative tasks. There may be more than one master
+node in the cluster to check for fault tolerance.
+b) API Server: The API server acts as an entry point for all the REST commands used for controlling the cluster.
+c) Scheduler: The scheduler schedules the tasks to the slave node. It stores the resource usage information for
+every slave node. It is responsible for distributing the workload.
+d) Etcd: etcd components, store configuration detail, and wright values. It communicates with the most component to
+receive commands and work. It also manages network rules and port forwarding activity.
+e) Worker/Slave nodes: Worker nodes are another essential component that contains all the required services to
+manage the networking between the containers, communicate with the master node, which allows you to assign
+resources to the scheduled containers.
+f) Kubelet: It gets the configuration of a Pod from the API server and ensures that the described containers are
+up and running.
+g) Docker Container: Docker container runs on each of the worker nodes, which runs the configured pods.
+h) Pods: A pod is a combination of single or multiple containers that logically run together on nodes.
+
+5) List various services available in Kubernetes
+Various services available in Kubernetes are:
+a) Cluster IP service
+b) Load Balancer service
+c) Node Port service
+d) External Name Creation service.
+
+6) What are the disadvantages of Kubernetes?
+a) Kubernetes dashboard is not as helpful as it should be.
+b) Security is not very effective.
+c) It is very complex and can reduce productivity
+d) Kubernetes is more costly than its alternatives.
+
+7. What tasks are performed by Kubernetes?
+Kubernetes is the Linux kernel which is used for distributed systems. It helps you to be abstract the underlying
+hardware of the nodes(servers) and offers a consistent interface for applications that consume the shared pool of
+resources.
+
+8. How to run Kubernetes locally?
+Kubernetes can be run locally using the Minikube tool. It runs a single-node cluster in a VM (virtual machine)
+on the computer. Therefore, it offers the ideal way for users who have just started learning Kubernetes.
+
+

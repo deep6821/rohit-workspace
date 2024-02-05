@@ -1,0 +1,59 @@
+Building an E-learning Platform
+(https://www.webcluesinfotech.com/how-to-create-an-elearning-app-like-byjus/)
+(https://github.com/davidrajdgl/E-learning-platform)
+-------------------------------
+
+Basic Features:
+---------------
+1. Login/Registration
+2. User Profile
+3. Course Listing
+4. Subscription
+5. Online Study Material
+
+Course Model:
++++++++++++++
+Tables
+------
+a) Subject -- title(char), slug(slug)
+b) Course -- owner(Foreign key: User), subject(Foreign key: Subject), title(char), slug(slug)
+             overview - TextField, created_at, updated_at.
+
+c) Module -- course(Foreign key: Course), title(char), description(TextField)
+
+Subscription Model:
++++++++++++++++++++
+
+
+Online Study Material Model:
+++++++++++++++++++++++++++++
+Tables
+------
+a) module --> course(Foreign key: Module), content_type(course(Foreign key: content_type), obj_id
+              item(Generic Foreign key: content_type, obj_id)
+
+--------------------------------------------------------------------------------------------------------
+Class ItemBase
+   owner,
+   title,
+   created_at,
+   updated_at
+
+class Text(ItemBase)
+   TextField
+
+class File(ItemBase)
+   File
+
+class Image(ItemBase)
+   FileField
+
+class Video(ItemBase)
+   URLField
+
+
+---------------------------------------------------------------------------------------------------------
+Django Auth -->(from django.contrib.auth import views as auth_views)
+
+
+

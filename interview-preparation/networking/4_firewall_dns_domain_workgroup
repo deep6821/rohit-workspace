@@ -1,0 +1,41 @@
+1. What is a Firewall?
+Answer: Firewall is a network security system that is used to protect computer
+        networks from unauthorized access. It prevents malicious access from
+        outside to the computer network. A firewall can also be built to grant
+        limited access to outside users.
+
+The firewall consists of a hardware device, software program or a combined
+configuration of both. All the messages that route through the firewall are
+examined by specific security criteria and the messages which meet the criteria
+are successfully traversed through the network or else those messages are blocked.
+
+Firewalls can be installed just like any other computer software and later can
+be customized as per the need and have some control over the access and security features.“
+
+Windows Firewall” is an inbuilt Microsoft Windows application that comes along with the operating system.
+This “Windows Firewall” also helps to prevent viruses, worms, etc.
+
+2. What is DNS?
+Answer: Domain Name Server (DNS), in a non-professional language and we can call it an Internet’s phone book.
+All the public IP addresses and their hostnames are stored in the DNS and later it translates into a
+corresponding IP address.
+
+For a human being, it is easy to remember and recognize the domain name, however, the computer is a machine
+that does not understand the human language and they only understand the language of IP addresses for data
+transfer.
+
+There is a “Central Registry” where all the domain names are stored and it gets updated on a periodic basis.
+All Internet service providers and different host companies usually interact with this central registry to
+get the updated DNS details.
+
+For Example, When you type a website www.softwaretestinghelp.com, then your Internet service provider looks
+for the DNS associated with this domain name and translates this website command into a machine language –
+IP address – 151.144.210.59 (note that, this is the imaginary IP address and not the actual IP for the given
+website) so that you will get redirected to the appropriate destination.
+
+3. What is the difference between a Domain and a Workgroup?
+Answer: In a computer network, different computers are organized in different methods and these methods
+are – Domains and Workgroups. Usually, computers which run on the home network belong to a Workgroup.
+
+However, computers that are running on an office network or any workplace network belong to the Domain.
+

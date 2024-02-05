@@ -1,0 +1,18 @@
+How to use file-based sessions?
+-------------------------------
+- In order to make use of file-based sessions, you will need to set the SESSION_ENGINE setting to
+“django.contrib.sessions.backends.file”.
+
+Give the exception classes present in Django:
+--------------------------------------------
+- Django uses its own exceptions as well as those present in Python. Django core exceptions are present in
+django.core.exceptions class some of which are mentioned in the table below:
+
+Exception                       Description
+---------                       -----------
+1. AppRegistryNotReady          Raised when you try to use your models before the app loading process (initializes the ORM) is completed.
+2. ObjectDoesNotExist           This is the base class for DoesNotExist exceptions.
+3. EmptyResultSet               This exception may be raised if a query won’t return any result.
+4. FieldDoesNotExist            This exception is raised by a model’s _meta.get_field() function in case the requested field does not exist
+5. MultipleObjectsReturned      This is raised by a query if multiple objects are returned and only one object was expected
+

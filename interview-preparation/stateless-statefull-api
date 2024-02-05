@@ -1,0 +1,18 @@
+Statelessness means that every HTTP request happens in complete isolation. When the client makes
+an HTTP request, it includes all the information necessary for the server to fulfill that request.
+The server never relies on information from previous requests. If that information was important,
+the client would have to send it again in subsequent request.
+
+Statelessness also brings new features. It’s easier to distribute a stateless application across
+load-balanced servers. A stateless application is also easy to cache.
+
+There are actually two kinds of state. Application State that lives on the client and Resource State
+that lives on the server.
+
+A web service only needs to care about your application state when you’re actually making a request.
+The rest of the time, it doesn’t even know you exist. This means that whenever a client makes a request,
+it must include all the application states the server will need to process it.
+
+Resource state is the same for every client, and its proper place is on the server. When you upload a
+picture to a server, you create a new resource: the new picture has its own URI and can be the target
+of future requests. You can fetch, modify, and delete this resource through HTTP.

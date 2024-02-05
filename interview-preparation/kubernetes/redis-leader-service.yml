@@ -1,0 +1,11 @@
+# https://kubernetes.io/docs/tutorials/stateless-application/
+
+# This tutorial shows you how to build and deploy a simple (not production ready), multi-tier web application using Kubernetes and Docker.
+
+# This example consists of the following components:
+# 1. A single-instance Redis to store guestbook entries
+# 2. Multiple web frontend instances
+
+
+
+

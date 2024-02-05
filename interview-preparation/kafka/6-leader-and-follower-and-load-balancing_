@@ -1,0 +1,23 @@
+1. Explain the concept of Leader and Follower.
+
+- In every partition of Kafka, there is one server which acts as the Leader, and none or more servers plays the role
+as a Followers.
+
+2. What ensures load balancing of the server in Kafka?
+
+- As the main role of the Leader is to perform the task of all read and write requests for the partition, whereas
+Followers passively replicate the leader.
+- Hence, at the time of Leader failing, one of the Followers takeover the role of the Leader. Basically, this entire
+process ensures load balancing of the servers.
+
+3. What roles do Replicas and the ISR play?
+
+- Basically, a list of nodes that replicate the log is Replicas. Especially, for a particular partition.
+- However, they are irrespective of whether they play the role of the Leader.
+- In addition, ISR refers to In-Sync Replicas. On defining ISR, it is a set of message replicas that are synced to
+the leaders.
+
+4.  Why are Replications critical in Kafka?
+- Because of Replication, we can be sure that published messages are not lost and can be consumed in the event of
+any machine error, program error or frequent software upgrades.
+

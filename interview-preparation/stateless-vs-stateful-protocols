@@ -1,0 +1,32 @@
+Both Stateless and stateful protocols are the network protocols for the web servers and web browsers.
+These protocols are differentiated based on the server side to save session information.
+
+----------------------------------------------------------------------------------------------------------
+SN	Key	Stateless	        Stateful                            Stateful
+----------------------------------------------------------------------------------------------------------
+1	Definition	            Stateless Protocol is a network     Stateful Protocol is a network protocol
+                            protocol in which Client send       in which if client send a request to the
+                            request to the server and server    server then it expects some kind of
+                            response back as per the given      response, in case of no response then
+                            state.                              it resend the request
+
+2	Examples	            HTTP (Hypertext Transfer Protocol)  FTP (File Transfer Protocol), Telnet.
+                            UDP (User Datagram Protocol),
+                            DNS (Domain Name System)
+
+3	Server Restriction	    In Stateless, server is not needed  In stateful, a server is required to
+                            to keep the server information or   maintain the current state and session
+                            session details to itself.          information.
+
+4	Dependency	            In stateless, server and client     In stateful, server and client are
+                            are loosely coupled and can act     tightly bound.
+                            independently.
+
+5	Design	                Server design is simple to          Server design is comparatively complex
+                                                                and difficult to implement.
+6	Crash Proof	            A failed server can be              A server has to keep the information of
+                            restarted easily after crash.       session and other details. Crash 
+                                                                management is difficult.
+
+7	Transactions	        Server handles transactions         Server is slow comparatively.
+                            in a very quicker way.

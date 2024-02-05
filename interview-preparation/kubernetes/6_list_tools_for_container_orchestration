@@ -1,0 +1,31 @@
+1. Define orchestration in Kubernetes
+Orchestration in Kubernetes defines as an automatic method of scheduling the work of every container.
+It is used for applications that are based on microservices within clusters.
+
+2. The tools for container orchestration are
+a) Docker swarm
+b) Apache Mesos
+c) Kubernetes.
+
+3. What is the difference between Kubernetes and Docker Swarm
+The difference between Kubernetes and Docker Swarm is:
+Kubernetes	                                        Docker Swarm
+----------                                          ------------
+a) Kubernetes Provides an auto-scaling feature.	    Docker Swarm does not provide an auto-scaling feature.
+b) Manually configure your load balancing settings.	Does auto load balancing
+c) Installation is complicated & time-consuming.	Installation is easy & fast.
+d) GUI is available.	                            GUI not available.
+e) It provides a built-in load balancing technique.	Process scheduling is done to maintain services while updating.
+
+4. Mention the difference between Docker volumes and Kubernetes Volumes
+Kubernetes Volumes	                            Docker Volumes
+------------------                              --------------
+a) Volumes are not limited to any container.	Volumes are limited to a pod in the container.
+b) Kubernetes volumes support all containers    Docker volumes do not support all containers deployed in Docker.
+deployed in a pod of Kubernetes.
+
+5. What is Sematext Docker Agent?
+- Sematext Docker agent is a log collection agent with events and metrics. It runs as a small container in each
+Docker host.
+- These agents gather metrics, events, and logs for all cluster nodes and containers.
+

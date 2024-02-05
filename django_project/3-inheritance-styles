@@ -1,0 +1,68 @@
+What are the different inheritance styles in Django?
+1. Abstract Base Classes: Used when you want to use the parent class to hold information that you don't want to type
+for each child model. Here the parent class is never used in solitude.
+
+ex:
+
+models.py
+---------
+from django.db import models
+class ContactInfo(models.Model):
+    name = models.CharField(max_length=20)
+    email = models.EmailField(max_length=20)
+
+   class Meta:
+       abstract = True
+
+class Customer(ContactInfo):
+    phone = models.IntegerField(max_length=15)
+
+admin.py
+--------
+admin.site.register(Customer)
+
+- When we migrate these changes than 1 table will get create in the database.
+Customer Table - We have name, email abd phone fields.
+
+- Base class Table is not created in this type of inheritance
+
+** No table for base class ,Only for derived class
+
+2. Multi Table Model Inheritance: This style is used if you are sub-classing an existing model and need each model
+to have it's own database table.
+
+models.py
+---------
+class Place(models.Model):
+	name=models.CharField(max_length=20)
+	address=models.TextField(max_length=20)
+
+	def __str__(self):
+		return self.name
+
+
+class Restaurants(Place):
+	serves_pizza=models.BooleanField(default=False)
+	serves_pasta=models.BooleanField(default=False)
+
+	def __str__(self):
+		return self.serves_pasta
+
+admin.py
+--------
+admin.site.register(Place)
+admin.site.register(Restaurants)
+
+- Base class table is also created in this inheritance.
+- It will create a one to one field model relationship for Restaurant table from Place table.
+
+** Create table for both base and derived class .
+
+3. Proxy Model Inheritance: This style is used, if you only want to modify the Python level behaviour of the model,
+without changing the model's fields.
+
+- You inherit from base class and you can add your own properties except fields.
+- Base class should not be abstract class.
+- We can not use of multiple inheritance in proxy models.
+- The main use of this is to overwrite the main functionalities of existing model.
+- It always query on original model with overridden methods.

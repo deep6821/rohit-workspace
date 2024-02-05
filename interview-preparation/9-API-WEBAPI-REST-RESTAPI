@@ -1,0 +1,48 @@
+API:
+---------------------------------------------------------------------------------------------------------
+- An API is a software intermediary that allows two or more applications to talk to each other
+  API Types in terms of Release Policies:
+  +++++++++++++++++++++++++++++++++++++++
+  1. Private API: It can be used within the organization
+  2. Partner API: It can be used within Business Partners
+  3. Public API: It can be used any third party Developers
+
+
+
+Web API:
+---------------------------------------------------------------------------------------------------------
+- An API, which is interface for Web is called as Web API.
+- It may consist of one or more endpoints to define request and response.
+
+  How Web API works?
+  ++++++++++++++++++
+  1. Client makes HTTP Request to Web API
+  2. Web API will communicate to Web Application/Databases
+  3. Web Application/Databases will provides required data to Web API
+  4. Web API return response to Client
+
+  How to use Web API?
+  +++++++++++++++++++
+  1. Register/Sign-up to API
+  2. API may provides API key for Authentication purpose
+  3. Whenever you need to communicate with Server make request to API with API key
+  4. If API key authentication succeed, API will provide required data
+  5.
+
+
+
+REST:
+---------------------------------------------------------------------------------------------------------
+- It is an architectural guideline to develop Web API.
+
+REST API:
+---------------------------------------------------------------------------------------------------------
+- The API which is developed using REST is known as REST/RESTful API.
+
+  How REST Web API works?
+  +++++++++++++++++++++++
+  1. Client makes HTTP Request to Web API
+  2. Web API will communicate to Web Application/Databases
+  3. Web Application/Databases will provides required data to Web API
+  4. Web API return response to Client
+

@@ -1,0 +1,58 @@
+Django vs Flask: key differences
+================================
+Django                                              Flask
+
+1. Django is a full-stack framework with many        Flask is a lightweight framework with minimalistic features
+   functionalities, tools, and features
+   already included;
+
+2. Template Engine: Template engines allow           Flask does not have a built-in template engine. Instead, it is
+   developers to inject information into a           based on the Jinja2 format engine.
+   backend's page dynamically.  However, it is
+   also possible to utilize Jinja2 with Django
+   and in terms of syntax, Jinja2 and Django's
+   templating engine are pretty similar.
+
+3. Admin: Contrarily, Django already comes with an    Flask does not have a feature to manage administration tasks, but
+   admin panel. This web application offers a user    it does have an extension - Flask-Admin - that can support various
+   interface for developers to handle  data based     database backends, such as MongoEngine and SQLAlchemy.
+   on their particular models. This interface can
+   be customized according to specific needs.
+
+   Plus Django's admin system enables quick CRUD
+   operations against models, which allows the
+   developer to build an  application  without
+   requiring to write more code or any external
+   input.
+
+4. Database: Django has a built-in ORM that enables   Flask, once again, does not provide a built-in solution but has
+   database systems (e.g., PostgreSQL, Oracle, and    many libraries (e.g., SQLAlchemy, PyMongo, and PonyORM) and extensions
+   developers to work with several relational         (e.g., Flask-Peewee, Flask-Pony, and Flask-Alembic) available for
+   MySQL).                                            both relational and non-relational databases.
+
+   The ORM can also support database migrations and
+   other database tasks. It stands out for its
+   practicality and ease of use since it does not
+   have to write long queries and is able to create
+   templates, views and forms according to the
+   specific data models.
+
+5. Development: Django stands out for being fast at    The same does not happen with Flask, where each project
+   developing complex web apps. Since it integrates    corresponds to a single application. Still, developers can add
+   all the "batteries", developers have the required   several views and models to a single application.
+   tools at their disposal for quick implementation.
+   Plus, this philosophy makes it easier to scale and
+   maintain web apps. Django also lets developers
+   split a project into multiple small page applications.
+
+
+
+ 6. Flexibility: When using Django, developers are not  Despite its flexibility, Flask usually takes longer to set up,
+    Flask enables developers to build add               considering that developers must add the appropriate tools and
+    functionalities to free to use other plugins and    libraries according to each project requirements and specificities.
+    libraries as they  are with Flask.
+
+                                                        simple applications in a flexible way. Consequently,
+                                                        it makes it easier to extend the application and better
+                                                        respond to projects with dynamic requirements.
+

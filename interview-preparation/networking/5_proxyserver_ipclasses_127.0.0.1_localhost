@@ -1,0 +1,36 @@
+1. What is a Proxy Server and how do they protect the computer network?
+Answer: For data transmission, IP addresses are required and even DNS uses IP addresses to route to the
+correct website. It means without the knowledge of correct and actual IP addresses it is not possible to
+identify the physical location of the network.
+
+Proxy servers prevent external users who are unauthorized to access such IP addresses of the internal network.
+It makes the computer network virtually invisible to external users.
+
+Proxy Server also maintains the list of blacklisted websites so that the internal user is automatically
+prevented from getting easily infected by viruses, worms, etc.
+
+2. What are IP classes and how can you identify the IP class of given an IP address?
+Answer: An IP address has 4 sets (octets) of numbers each with a value up to 255.
+
+For Example, the range of the home or commercial connection started primarily between 190 x or 10 x. IP
+classes are differentiated based on the number of hosts it supports on a single network. If IP classes
+support more networks then very few IP addresses are available for each network.
+
+There are three types of IP classes and are based on the first octet of IP addresses which are classified as
+Class A, B or C. If the first octet begins with 0 bit then it is of type Class A.
+
+Class A type has a range up to 127.x.x.x (except 127.0.0.1). If it starts with bits 10 then it belongs to
+Class B. Class B having a range from 128.x to 191.x.  IP class belongs to Class C if the octet starts with
+bits 110. Class C has a range from 192.x to 223.x.
+
+3. What is meant by 127.0.0.1 and localhost?
+Answer: IP address 127.0.0.1, is reserved for loopback or localhost connections. These networks are usually
+reserved for the biggest customers or some of the original members of the Internet. To identify any
+connection issue, the initial step is to ping the server and check if it is responding.
+
+If there is no response from the server then there are various causes like the network is down or the cable
+needs to be replaced or the network card is not in good condition. 127.0.0.1 is a loopback connection on
+the Network Interface Card (NIC) and if you are able to ping this server successfully, then it means that
+the hardware is in a good shape and condition.
+
+127.0.0.1 and localhost are the same things in most of the computer network functioning.

@@ -1,0 +1,140 @@
+What are signals?
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+- Django consists of a signal dispatcher that helps allow decoupled applications to get notified when actions occur
+elsewhere in the framework.
+
+- Django provides a set of built-in signals that basically allow senders to notify a set of receivers when some
+action is executed. Some of the signals are as follows:
+
+Signal                                              Description
+------                                              -----------
+
+1. django.db.models.signals.pre_save                Sent before or after a model’s save() method is called
+   django.db.models.signals.post_save
+
+2. django.db.models.signals.pre_delete              Sent before or after a model’s delete() method or
+   django.db.models.signals.post_delete             queryset's delete() method is called
+
+3. django.db.models.signals.m2m_changed             Sent when Django starts or finishes an HTTP request
+
+
+Ex:
+---
+
+- The most common example of using Django signals is when we want to create a user profile as soon as the user
+creates his account which can be done by creating a signals.py file in your app directory with following code.
+
+from django.db.models.signals import post_save
+from django.contrib.auth.models import User
+from django.dispatch import receiver
+from .models import Profile
+
+
+@receiver(post_save, sender=User)
+def create_profile(sender, instance, created, **kwargs):
+	if created:
+		Profile.objects.create(user=instance)
+
+
+@receiver(post_save, sender=User)
+def save_profile(sender, instance, **kwargs):
+		instance.profile.save()
+
+
+Code Explanation:
+-----------------
+
+Think of it like this : We have a sender here i.e sender=User and a signal of post_save which says that when a
+User is saved then send this signal and the signal will be recieved by the receiver which here is the
+create_profile function and the create_profile function takes all of arguments that our post_save signal passed to
+it, one of which is instance and once is created. Then we check if that user was created then create a profile
+object with the user equal to the instance of the user that was created.
+
+In the second function we are just saving the profile once the user saves his account details and such.
+
+Note: There is one thing we must be note that for our signals to work we must import our signals inside the ready
+function of our apps.py file. Django documentation recommends doing it this way to avoid some side effects of how
+imports work.
+
+from django.apps import AppConfig
+class UsersConfig(AppConfig):
+    name = 'users'
+
+    def ready(self): #method just to import the signals
+    	import users.signals
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Concept:
+--------
+
+There are two main concepts in Django signals :
+1. The Signal: A Signal is an object corresponding to a particular event. For example, we might define the
+following signal to represent a pizza having finished cooking:
+
+from django.dispatch import Signal
+pizza_done = django.dispatch.Signal(providing_args=["toppings", "size"])
+
+** Here we created a custom signal to send to the receiver **
+
+Signals can send messages. This is achieved by calling the send() method on the signal instance
+(passing in a sender argument, along with the arguments specified above):
+
+class Pizza:
+     def mark_as_done(self, toppings, size):
+         ...
+         pizza_done.send(sender=self.__class__, toppings=toppings,   size=size)
+
+2. The Receiver: Receivers are callables that are connected to a particular signal. When the signal sends its
+message, each connected receiver gets called. Receivers’ function signatures should match what the signal’s send()
+method uses. You connect a receiver to a signal using the @receiver decorator:
+
+from django.dispatch import receiver
+from pizza import signals
+@receiver(signals.pizza_done)
+def turn_off_oven_when_pizza_done(sender, toppings, size, **kwargs):       # Turn off oven
+
+Those are the basics of the signals dispatcher. You have signals and receivers, the receivers can connect to the
+signals, and the signals send messages to any connected receivers
+
+The final thing to note is that signals are called synchronously; in other words, the normal program execution
+flow runs each receiver in turn before continuing with the code that sent the signal.
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+What signals are for ?
+----------------------
+
+- The signal dispatcher mechanism is not special to Django, but is actually a well known
+design pattern: the Observer pattern. The only difference is in terminology: in the Observer pattern a signal is
+known as a ‘subject’, and a receiver as an ‘observer’.
+
+- This pattern is used to decouple the observers (receivers) from the subject (signal). Indeed the Django docs
+tell us that signals "allow decoupled applications to get notified when actions occur elsewhere".
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+But what exactly does ‘decoupled applications’ mean?
+
+Project dependency flow:
+------------------------
+circular dependencies: The reason it’s tightly coupled is because there are circular dependencies between the apps, so you couldn’t
+remove one app without breaking the others. This is an antipattern, and should be avoided.
+
+single dependencies: This project is much better structured, but achieving a single flow is not always
+straightforward.
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+The only reason to use signals
+
+1. Only use signals to avoid introducing circular dependencies.
+- If you have two apps, and one app wants to trigger behaviour in an app it already knows about, don’t use signals.
+The app should just import the function it needs and call it directly.
+
+- Signals come into play if the reverse is needed: you want an app to trigger behaviour in an app that depends
+upon that app. In this case, signals are a great way of providing a ‘hook’ which the second app can exploit by
+connecting a receiver to it.
+
+
+
+
+
+

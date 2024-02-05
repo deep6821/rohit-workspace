@@ -1,0 +1,35 @@
+1. What is the role of the ZooKeeper in Kafka?
+
+- Apache Kafka is a distributed system is built to use Zookeeper.
+- Although, Zookeeper’s main role here is to build coordination between different nodes in a cluster.
+- However, we also use Zookeeper to recover from previously committed offset if any node fails because it works as
+periodically commit offset.
+
+2. Is it possible to use Kafka without ZooKeeper?
+
+- It is impossible to bypass Zookeeper and connect directly to the Kafka server, so the answer is no.
+- If somehow, ZooKeeper is down, then it is impossible to service any client request.
+
+3. What do you know about Partition in Kafka?
+
+-  In every Kafka broker, there are few partitions available.
+- And, here each partition in Kafka can be either a leader or a replica of a topic.
+
+4. Why is Kafka technology significant to use?
+
+a) High-throughput:
+- We do not need any large hardware in Kafka, because it is capable of handling high-velocity and high-volume data.
+- Moreover, it can also support message throughput of thousands of messages per second.
+
+b) Low Latency:
+- Kafka can easily handle these messages with the very low latency of the range of milliseconds, demanded by most of
+the new use cases.
+
+c) Fault-Tolerant:
+- Kafka is resistant to node/machine failure within a cluster.
+
+d) Durability
+- As Kafka supports messages replication, so,  messages are never lost. It is one of the reasons behind durability.
+
+e) Scalability:
+- Kafka can be scaled-out, without incurring any downtime on the fly by adding additional nodes.

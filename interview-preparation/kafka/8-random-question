@@ -1,0 +1,54 @@
+1. What can you do with Kafka?
+
+- It can perform in several ways, such as:
+>> In order to transmit data between two systems, we can build a real-time stream of data pipelines with it.
+>> Also, we can build a real-time streaming platform with Kafka, that can actually react to the data.
+
+2. What is the purpose of retention period in Kafka cluster?
+
+- However, retention period retains all the published records within the Kafka cluster.
+- It doesn’t check whether they have been consumed or not.
+- Moreover, the records can be discarded by using a configuration setting for the retention period.
+- And, it results as it can free up some space.
+
+3. Explain the maximum size of a message that can be received by the Kafka?
+
+- The maximum size of a message that can be received by the Kafka is approx. 1000000 bytes.
+
+4. What are the types of traditional method of message transfer?
+
+- Basically, there are two methods of the traditional message transfer method, such as:
+a) Queuing: It is a method in which a pool of consumers may read a message from the server and each message goes
+to one of them.
+b) Publish-Subscribe: Whereas in Publish-Subscribe, messages are broadcasted to all consumers.
+
+5. What does ISR stand in Kafka environment?
+
+- ISR refers to In sync replicas. These are generally classified as a set of message replicas which are synced to
+be leaders.
+
+6. What is Geo-Replication in Kafka?
+
+- For our cluster, Kafka MirrorMaker offers geo-replication.
+- Basically, messages are replicated across multiple data centers or cloud regions, with MirrorMaker.
+- So, it can be used in active/passive scenarios for backup and recovery; or also to place data closer to our users,
+or support data locality requirements.
+
+7. Explain Multi-tenancy?
+
+- We can easily deploy Kafka as a multi-tenant solution.
+- However, by configuring which topics can produce or consume data, Multi-tenancy is enabled.
+- Also, it provides operations support for quotas.
+
+8. What is the role of Consumer API?
+
+- An API which permits an application to subscribe to one or more topics and also to process the stream of
+records produced to them is what we call Consumer API.
+
+9. Explain the role of Streams API?
+
+- An API which permits an application to act as a stream processor, and also consuming an input stream from one or more topics and producing an output stream to one or more output topics, moreover, transforming the input streams to output streams effectively, is what we call Streams API.
+
+10. What is the role of Connector API?
+
+- An API which permits to run as well as build the reusable producers or consumers which connect Kafka topics to existing applications or data systems is what we call the Connector API.

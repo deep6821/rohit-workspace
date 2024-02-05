@@ -1,0 +1,210 @@
+apiVersion: v1 # Which version of the Kubernetes API you're using to create this object
+kind: List # What kind of object you want to create
+items:
+- kind: Service
+  apiVersion: v1
+  metadata: # Data that helps uniquely identify the object, including a name string, UID, and optional namespace
+    name: weather-data-service
+  spec: #  What state you desire for the object
+    selector:
+      app: weather-data-service # This must match the motor_insurance label applied in the Deployment created below
+    ports:
+      - port: 80
+        targetPort: 80
+- kind: ConfigMap
+  apiVersion: v1
+  metadata:
+    name: weatherdata-streams-conf
+  data:
+    weather_streams: |
+      FORECAST:
+        FCST_CLOUDCOVER_PERCENT: clds
+        FCST_DEWPOINT: dewpt
+        FCST_FEELS_LIKE: feels_like
+        FCST_PROBABILITY_OF_PRECIPITATION: precip_type
+        FCST_RELATIVEHUMIDITY_PERCENT: rh
+        FCST_TEMPERATURE: temp
+        FCST_WINDSPEED: wspd
+        FCST_WINDDIRECTION: wdir
+      HISTORICAL:
+        HISTORICAL_FEELS_LIKE: apparentTemperatureFahrenheit
+        HISTORICAL_CLOUDCOVER_PERCENT: cloudCoveragePercent
+        HISTORICAL_PROBABILITY_OF_PRECIPITATION: precipitationPreviousHourInches
+        HISTORICAL_HUMIDITY_PERCENT: relativeHumidityPercent
+        HISTORICAL_SNOW: snowfallInches
+        HISTORICAL_TEMPERATURE: surfaceTemperatureFahrenheit
+        HISTORICAL_WINDCHILL: windChillTemperatureFahrenheit
+        HISTORICAL_WINDSPEED: windSpeedMph
+      SOLAR_FORECAST:
+        IRRADIANCEGLOBALHORIZONTAL: irradianceGlobalHorizontal
+        IRRADIANCEDIRECTNORMAL: irradianceDirectNormal
+      SOURCE: WEATHER_DATA
+      TOPIC: topic.weatherdata.out
+- kind: ConfigMap
+  apiVersion: v1
+  metadata:
+    name: weatherdata-crontab
+  data:
+    crontab: |
+      hour:{{esb.weatherdata.hour}}
+      minute:{{esb.weatherdata.minute}}
+      airport:{{esb.weatherdata.airport}}
+      startDate:{{esb.weatherdata.startDate}}
+      endDate:{{esb.weatherdata.endDate}}
+      historicalInterval:{{esb.weatherdata.historicalInterval}}
+      solarForecastHorizonday:{{esb.weatherdata.solarForecastHorizonday}}
+- kind: ConfigMap
+  apiVersion: v1
+  metadata:
+    name: weatherdata-mysql-config
+  data:
+    rdbms: |
+      droms:
+        driver: mysql+mysqldb
+        user: {{ foundation.mysql.username }}
+        password: {{ foundation.mysql.password }}
+        host: {{ foundation.mysql.host }}
+        port: 3306
+        pool_size: 1
+        pool_recycle: 3600
+        schema: droms_db
+- kind: ConfigMap
+  apiVersion: v1
+  metadata:
+    name: weather-data-api-key
+  data:
+    weather_api_keys: |
+      FORECAST_API:{{ esb.weatherdata_api_key.forecast }}
+      HISTORICAL_API:{{ esb.weatherdata_api_key.historical }}
+      SOLAR_FORECAST_API_KEY:{{ esb.weatherdata_api_key.solar_forecast }}
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    name: forecast-weather-jobs-deployment
+  spec:
+    replicas: 1 # tells deployment to run 1 pods matching the template
+    template:
+      metadata:
+        labels:
+          app: weather-data-service
+      spec:
+        containers:
+        - name: forecast-weather-job-container
+          image: us.gcr.io/{{ kubernetes.gcr_dir }}/connectors_weather:{{ image_tag }}
+          resources:
+            limits:
+              cpu: 500m
+              memory: 2Gi
+            requests:
+              cpu: 25m
+              memory: 0.1Gi
+          command: ["sh","/motor_insurance/upstart_forecast_weather_jobs.sh"]
+          ports:
+          - containerPort: 80
+          envFrom:
+          - configMapRef:
+              name: logger
+          - configMapRef:
+              name: weatherdata-mysql-config
+          - configMapRef:
+              name: kafka-config
+          - configMapRef:
+              name: weatherdata-streams-conf
+          - configMapRef:
+              name: weather-data-api-key
+          - configMapRef:
+              name: weatherdata-crontab
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    name: historical-weather-jobs-deployment
+  spec:
+    replicas: 1
+    template:
+      metadata:
+        labels:
+          app: weather-data-service
+      spec:
+        containers:
+        - name: historical-weather-job-container
+          image: us.gcr.io/{{ kubernetes.gcr_dir }}/connectors_weather:{{ image_tag }}
+          resources:
+            limits:
+              cpu: 500m
+              memory: 2Gi
+            requests:
+              cpu: 25m
+              memory: 0.1Gi
+          command: ["sh","/motor_insurance/upstart_historical_weather_jobs.sh"]
+          ports:
+          - containerPort: 80
+          envFrom:
+          - configMapRef:
+              name: logger
+          - configMapRef:
+              name: weatherdata-mysql-config
+          - configMapRef:
+              name: kafka-config
+          - configMapRef:
+              name: weatherdata-streams-conf
+          - configMapRef:
+              name: weather-data-api-key
+          - configMapRef:
+              name: weatherdata-crontab
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    name: solar-forecast-weather-jobs-deployment
+  spec:
+    replicas: 1
+    template:
+      metadata:
+        labels:
+          app: weather-data-service
+      spec:
+        containers:
+        - name: solar-forecast-weather-job-container
+          image: us.gcr.io/{{ kubernetes.gcr_dir }}/connectors_weather:{{ image_tag }}
+          resources:
+            limits:
+              cpu: 500m
+              memory: 2Gi
+            requests:
+              cpu: 25m
+              memory: 0.1Gi
+          command: ["sh","/motor_insurance/upstart_solar_forecast_weather_jobs.sh"]
+          ports:
+          - containerPort: 80
+          envFrom:
+          - configMapRef:
+              name: logger
+          - configMapRef:
+              name: weatherdata-mysql-config
+          - configMapRef:
+              name: kafka-config
+          - configMapRef:
+              name: weatherdata-streams-conf
+          - configMapRef:
+              name: weather-data-api-key
+          - configMapRef:
+              name: weatherdata-crontab
+- apiVersion: extensions/v1beta1
+  kind: Ingress
+  metadata:
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /
+      kubernetes.io/ingress.class: "internal"
+    name: weather-data-ingress
+  spec:
+    tls:
+    - hosts:
+      - {{ kubernetes.ingress.internal }}
+      secretName: tls-secret
+    rules:
+    - host: {{ kubernetes.ingress.internal }}
+      http:
+        paths:
+        - path: /weather
+          backend:
+            serviceName: weather-data-service
+            servicePort: 80

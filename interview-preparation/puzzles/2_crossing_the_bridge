@@ -1,0 +1,16 @@
+Crossing the bridge:
+--------------------
+
+Person  Time    Torch
+1       1         1
+2       2
+3       7
+4       10
+
+1) 1 and 2 ==> 2 min
+2) 1 return back ==> 1 min
+3) 3 and 4 ==> 10 min
+4) 2 return back ==> 2 min
+5) 1 and 2 ==> 2
+
+Total Time  ==> 17 min

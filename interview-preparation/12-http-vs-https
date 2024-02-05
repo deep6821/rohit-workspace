@@ -1,0 +1,13 @@
+HTTP                                    HTTPS:
+1. HTTP is unsecured                    HTTPS is secured
+2. HTTP sends data over port 80         HTTPS uses port 443
+
+3. HTTP operates at application layer   HTTPS operates at transport layer
+4. No SSL certificates are required     HTTPS it is required that you have an SSL certificate
+for HTTP                                and it is signed by a CA.
+
+5. HTTP doesn't require domain          HTTPS requires at least domain validation and certain certificates
+validation                              even require legal document validation
+6. No encryption in HTTP                HTTPS the data is encrypted before sending.
+
+

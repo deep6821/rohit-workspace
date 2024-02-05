@@ -1,0 +1,31 @@
+1. What is a Network?
+Answer: Network is defined as a set of devices connected to each other using a
+        physical transmission medium.
+
+For Example, A computer network is a group of computers connected with each
+other to communicate and share information and resources like hardware, data,
+and software. In a network, nodes are used to connect two or more networks.
+
+2. What is a Node?
+Answer: Two or more computers are connected directly by an optical fiber or any
+        other cable. A node is a point where a connection is established. It is
+        a network component that is used to send, receive and forward the
+        electronic information.
+
+A device connected to a network is also termed as Node. Let's consider that in
+a network there are 2 computers, 2 printers, and a server are connected, then
+we can say that there are five nodes on the network.
+
+3. What is Network Topology?
+Answer: Network topology is a physical layout of the computer network and it
+defines how the computers, devices, cables, etc are connected to each other.
+
+4. What are Routers?
+Answer: The router is a network device that connects two or more network
+segments. It is used to transfer information from the source to the destination.
+
+Routers send the information in terms of data packets and when these data
+packets are forwarded from one router to another router then the router reads
+the network address in the packets and identifies the destination network.
+
+

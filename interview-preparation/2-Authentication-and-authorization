@@ -1,0 +1,29 @@
+- In simple terms, authentication is the process of verifying who the user is, while authorization is the
+process of verifying what they have access to.
+
+Ex:
+When you go through security in an airport, you show your ID card to authenticate your identity then when
+you arrive at the gate, you present your boarding pass to the flight attendant, so they can authorize you
+to board flight and allow access to the plan.
+
+
+Authentication                                      Authorization
+1. Determine whether users are who they claim       Determines what users can and cannot access.
+to be.
+
+2. Challenges the user to validate credentials      Verifies whether access is allowed through policies
+(through password, ---).                            and roles.
+
+3. Usually done before Authorization.               Usually done after successful Authentication
+
+4. Generally transmits info through an ID token.    Transmits through an access token.
+
+5. Generally governed by the openID connect         Auth 2.0 framework.
+(OIDC protocol).
+
+Ex: Employee in a company are required to           After an employee successfully authenticates the system
+authenticate through the network before             determines what information the employee are allowed
+accessing their company email.                      to access.
+
+------------------------------------------------------------------------------------------------------------
+

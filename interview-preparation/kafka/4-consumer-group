@@ -1,0 +1,21 @@
+A partition can be consumed by one or more consumers, each reading at different offsets.
+
+In consumer groups several consumers are grouped to consume a given topic. Consumers in the same consumer
+group are assigned the same group-id value.
+
+-----------------------------------------------------------------------------------------------------
+The consumer group concept ensures that a message is only ever read by a single consumer in the group.
+------------------------------------------------------------------------------------------------------
+
+When a consumer group consumes the partitions of a topic, Kafka makes sure that each partition is consumed
+by exactly one consumer in the group.
+
+Consumer groups enable consumers to parallelize and process messages at very high throughputs. However,
+the maximum parallelism of a group will be equal to the number of partitions of that topic.
+
+For example, if you have N + 1 consumers for a topic with N partitions, then the first N consumers will be
+assigned a topic, and the remaining consumer will be idle, unless one of the N consumers fails, then the
+waiting consumer will be assigned its partition. This is a good strategy to implement a hot failover.
+
+*** The key takeaway is that number of consumers don’t govern the degree of parallelism of a topic. It’s
+the number of partitions ***

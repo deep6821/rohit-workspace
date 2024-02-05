@@ -1,0 +1,4 @@
+How to install Django?
+   python -m pip install Django
+   >>> import django
+   >>> print(django.get_version())

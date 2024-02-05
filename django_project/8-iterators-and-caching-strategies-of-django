@@ -1,0 +1,31 @@
+When can you use iterators in Django ORM?
+-----------------------------------------
+- Iterators in Python are basically containers that consist of a countable number of elements. Any object that is an
+iterator implements two methods which are, the __init__() and the __next__()  methods.
+
+- When you are making use of iterators in Django, the best situation to do it is when you have to process results
+that will require a large amount of memory space. To do this, you can make use of the iterator() method which
+basically evaluates a QuerySet and returns the corresponding iterator over the results.
+
+Explain the caching strategies of Django?
+-----------------------------------------
+- Caching basically means to save the output of an expensive calculation in order to avoid performing the same
+calculation again.
+
+- Django provides a robust cache system which in turn helps you save dynamic web pages so that they don’t have to
+be evaluated over and over again for each request. Some of the caching strategies of Django are listed down in the
+following table:
+
+Strategy                                Description
+--------                                -----------
+1. Memcached                            Memory-based cache server which is the fastest and most efficient
+
+2. Filesystem caching                   Cache values are stored as separate files in a serialized order
+
+3. Local-memory caching                 This is actually the default cache in case you have not specified any other.
+                                        This type of cache is per-process and thread-safe as well.
+
+4. Database caching                     Cache data will be stored in the database and works very well if you have a
+                                        fast and well-indexed database server
+
+

@@ -1,0 +1,23 @@
+1.  What do you mean by persistent volume?
+A persistent volume is a storage unit that is controlled by the administrator. It is used to manage an
+individual pod in a cluster.
+
+2.  Explain PVC
+The full form of PVC stands for Persistent Volume Claim. It is storage requested by Kubernetes for pods.
+The user does not require to know the underlying provisioning. This claim should be created in the same
+namespace where the pod is created.
+
+3. What are the types of Kubernetes Volume?
+The types of Kubernetes Volume are:
+a) EmptyDir
+b) GCE persistent disk
+c) Flocker
+d) HostPath
+e) NFS
+f) ISCSI
+g) rbd
+h) PersistentVolumeClaim
+i) downwardAPI
+
+
+

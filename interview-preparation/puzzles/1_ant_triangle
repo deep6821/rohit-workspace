@@ -1,0 +1,6 @@
+Ant and Triangle Problem:
+-------------------------
+
+P(No of collision) = P(All ants go in clock wise dir) + P(All ants go in anti clock wise dir)
+                    1/2 * 1/2 * 1/2 + 1/2 * 1/2 * 1/2 = 2/8 -->> 0.25
+

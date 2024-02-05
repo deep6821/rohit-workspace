@@ -1,0 +1,47 @@
+1. What is HTTP and what port does it use?
+Answer: HTTP is HyperText Transfer Protocol and it is responsible for web
+        content. Many web pages are using HTTP to transmit the web content and
+        allow the display and navigation of HyperText. It is the primary
+        protocol and port used here is TCP port 80.
+
+2. What is HTTPs and what port does it use?
+Answer: HTTPs is a Secure HTTP. HTTPs is used for secure communication over a
+        computer network. HTTPs provides authentication of websites that
+        prevents unwanted attacks.
+
+In bi-directional communication, the HTTPs protocol encrypts the communication
+so that the tampering of the data gets avoided. With the help of an SSL
+certificate, it verifies if the requested server connection is a valid
+connection or not. HTTPs use TCP with port 443.
+
+3. What are TCP and UDP?
+Answer: Common factors in TCP and UDP are:
+. TCP and UDP are the most widely used protocols that are built on the top of the IP protocol.
+. Both protocols TCP and UDP are used to send bits of data over the Internet, which is also known as
+‘packets’.
+. When packets are transferred using either TCP or UDP, it is sent to an IP address. These packets are
+traversed through routers to the destination.
+
+The difference between TCP and UDP are enlisted in the below table:
+TCP                                                 UDP
+a) TCP stands for Transmission Control Protocol     UDP is stands for User Datagram Protocol or Universal
+                                                    Datagram Protocol
+b) Once the connection is setup, data can be sent   UDP is connectionless, simple protocol. Using UDP
+bi-directional i.e. TCP is a connection oriented    messages are sent as packets
+protocol
+
+c) The speed of TCP is slower than UDP              UDP is faster compared to TCP
+
+d) TCP is used for the application where            UDP is suitable for the applications which require fast
+time is not critical part of data                   transmission of data and time is crucial in this case.
+transmission
+
+e) TCP transmission occurs in a sequential          UDP transmission also occurs in a sequential manner but
+manner                                              it does not maintain the same sequence when it reaches
+                                                    the destination
+
+f) It is heavy weight connection                    It is lightweight transport layer
+
+g) TCP tracks the data sent to ensure               UDP does not ensure whether receiver receives packets
+no data loss during data transmission               are not. If packets are misses then they are just lost
+

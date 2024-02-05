@@ -1,0 +1,497 @@
+Concurrency in Python is one of the most complex topics to grasp, let alone implement. It also doesn’t help
+that there are multiple ways to produce concurrent programs:
+
+1. Should I spin up multiple threads?
+2. Use multiple processes?
+3. Use asynchronous programming? Well, the answer there is to use the one that best serves your use case,
+but when in doubt you should use async IO when you can; use threading when you must.
+
+What is asyncio:
+--------------- asyncio stands for asynchronous input output and refers to a programming paradigm which
+achieves high concurrency using a single thread or event loop. The model isn’t novel to Python and is
+implemented in other languages and frameworks too, the most prominent being JavaScript’s NodeJS.
+
+Understanding asyncio with an example:
+------------------------------------- To understand the concept behind asyncio, let’s consider a restaurant
+with a single waiter. Suddenly, three customers, Rohit, Ravi and Prakash show up. The three of them take a
+varying amount of time to decide what to eat once they receive the menu from the waiter.
+
+Let’s assume Rohit takes 5 minutes, Ravi 10 minutes and Prakash 1 minute to decide. If the single waiter
+starts with Rohit first and takes his order in 10 minutes, next he serves Ravi and spends 5 minutes on noting
+down his order and finally spends 1 minute to know what Prakash wants to eat. So, in total,  he spends
+10 + 5 + 1 = 16 minutes to take down their orders. However, notice in this sequence of events, Prakash ends
+up waiting 15 minutes before the waiter gets to him, Ravi waits 10 minutes and Rohit waits 0 minutes
+
+Now consider if the waiter knew the time each customer would take to decide. He can start with Prakash first,
+then get to Ravi and finally to Rohit. This way each customer would experience a 0 minute wait. An illusion
+of three waiters, one dedicated to each customer is created even though there’s only one. Lastly, the total
+time it takes for the waiter to take all three orders is 10 minutes, much less than the 16 minutes  in the
+other scenario.
+
+Why use asyncio instead of multiple threads in Python?
+------------------------------------------------------
+a) It’s very difficult to write code that is thread safe. With asynchronous code, you know exactly where the
+code will shift from one task to the next and race conditions are much harder to come by.
+b) Threads consume a fair amount of data since each thread needs to have its own stack. With async code, all
+the code shares the same stack and the stack is kept small due to continuously unwinding the stack between
+tasks.
+c) Threads are OS structures and therefore require more memory for the platform to support. There is no such
+problem with asynchronous tasks.
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Working with an older codebase? The old way of creating asynchronous programs
+-----------------------------------------------------------------------------
+So you’ve started a new job and find that the codebase is riddled with legacy Python code. This section will
+get you up to speed on the old way of creating asynchronous programs.
+
+There is a lot to cover here, so let’s just dive in. The first concept you’ll want to know is iterables and
+iterators, this is because they serve as the basis for generators which opened the doors for asynchronous
+programming.
+
+Iterables and iterators.
+Yield:
+
+Generator-based coroutine:
+Python created a distinction between Python generators and generators that were meant to be used as
+coroutines. These coroutines are called generator-based coroutines and require the
+decorator @asynio.coroutine to be added to the function definition, though this isn’t strictly enforced.
+
+Generator based coroutines use yield from syntax instead of yield. A coroutine can:
+yield from another coroutine
+yield from a future
+return an expression
+raise exception
+
+Coroutines in Python make cooperative multitasking possible. Cooperative multitasking is the approach in
+which the running process voluntarily gives up the CPU to other processes. A process may do so when it is
+logically blocked, say while waiting for user input or when it has initiated a network request and will be
+idle for a while.
+
+A coroutine can be defined as a special function that can give up control to its caller without losing its
+state.
+
+So what’s the difference between coroutines and generators?
+-----------------------------------------------------------
+
+Generators are essentially iterators though they look like functions. The distinction between generators and
+coroutines, in general, is that:
+
+a) Generators yield back a value to the invoker whereas a coroutine yields control to another coroutine and
+   can resume execution from the point it gives up control.
+b) A generator can’t accept arguments once started whereas a coroutine can.
+c) Generators are primarily used to simplify writing iterators. They are a type of coroutine and sometimes
+   also called as semicoroutines.
+
+Generator-based coroutine example
+---------------------------------
+The simplest generator based coroutine we can write is as follows:
+
+@asyncio.coroutine
+def do_something_important():
+    yield from asyncio.sleep(1)
+
+The coroutine sleeps for one second. Note the decorator and the use of yield from. Without, either of them
+you wouldn’t be able to use the coroutine with asyncio. The yield from statement gives up control back to
+the event loop and resumes execution after the coroutine asyncio.sleep() has completed. Note that
+asyncio.sleep() is itself a coroutine. Let us modify this coroutine to call another coroutine which
+performs the sleep. The changes are shown below:
+
+@asyncio.coroutine
+def go_to_sleep(sleep):
+    print("sleeping for " + str(sleep) + " seconds")
+    yield from asyncio.sleep(sleep)
+
+
+@asyncio.coroutine
+def do_something_important(sleep):
+    # what is more important than getting
+    # enough sleep!
+    yield from go_to_sleep(sleep)
+
+
+Now imagine you invoke the coroutine do_something_important() thrice serially with the values 1, 2 and 3
+respectively. Without using threads or multiprocessing the serial code will execute in 1 + 2 + 3 = 6 seconds,
+however, if you leverage asyncio, the same code can complete in roughly 3 seconds even though all of the
+invocations run in the same thread. The intuition is that whenever a blocking operation is encountered the
+control is passed back to the event loop and execution is only resumed when the blocking operation has
+completed.
+
+In the case of Python, generators are used as producers of data and coroutines as consumers of data. Before
+support for native coroutines was introduced in Python 3.5, coroutines were implemented using generators.
+Objects of both, however, are of type generator. However, since version 3.5, Python makes a distinction
+between coroutines and generators.
+
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Python 3 and the new way to create asynchronous programs:
+--------------------------------------------------------
+There are three main elements to creating asynchronous programs in Python: Native coroutines, event loops,
+and futures. Let’s dive in and examine each.
+
+Native coroutines:
+in Python 3.5 the language introduced support for native coroutines. By native it is meant that the language
+introduced syntax to specifically define coroutines, making them first class citizens in the language.
+Native coroutines can be defined using the async/await syntax.
+
+** async **
+Ex:
+# We can create a native coroutine by using async def. A method prefixed with async def automatically
+# becomes a native coroutine.
+async def coro():
+    await asyncio.sleep(1)
+
+# The above coroutine can be run with an event loop as follows:
+loop = asyncio.get_event_loop()
+loop.run_until_complete(coro())
+
+Ex:
+import inspect
+import asyncio
+
+async def useless_native_coroutine():
+  pass
+
+if __name__ == "__main__":
+    coro = useless_native_coroutine()
+    # The inspect.iscoroutine() method would return True for a coroutine object returned from the above
+    coroutine function. Note that yield or yield from can’t appear in the body of an async-defined method,
+    else the occurrence would be flagged as a syntax error.
+    print(inspect.iscoroutine(coro))
+
+
+** await **
+await can be used to obtain the result of a coroutine object’s execution. You use await as: await <expr>
+where <expr> must be an awaitable object. Awaitable objects must implement the __await__() method that
+should return an iterator. If you recall yield from also expects its argument to be an iterable from which
+an iterator can be obtained. Under the hood, await borrows implementation from yield from with an additional
+check if its argument is indeed an awaitable. The following objects are awaitable:
+
+a) A native coroutine object returned from calling a native coroutine function.
+b) A generator based coroutine object returned from a generator decorated with @types.coroutine
+or @asyncio.coroutine. Decorated generator-based coroutines are awaitables, even though they do not have
+an __await__() method.
+
+c) Future objects are awaitable.
+d) Task objects are awaitable and Task is a subclass of Future.
+
+e) Objects defined with CPython C API with a tp_as_async.am_await() function, returning an iterator
+(similar to __await__() method).
+
+Additionally, await must appear inside an async-defined method, else it’s a syntax error. As things stand
+now, generators are used to refer to functions that produce values only, vanilla coroutines receive values
+only, generator-based coroutines are identified via the presence of yield from in the method body and
+finally native coroutines are defined using the async/await syntax.
+
+Another way to summarize this discussion is:
+
+a) Generators return values using yield for their invokers
+b) Generators that can receive values from outside are coroutines
+c) Generators with yield from in their function bodies are generator-based coroutines and methods defined
+using async-def are native coroutines.
+d) Use the @asyncio.coroutine or @types.coroutine decorators on generator-based coroutines to make them
+compatible with native coroutines.
+
+
+** Event loops **
+The event loop is a programming construct that waits for events to happen and then dispatches them to an
+event handler. An event can be a user clicking on a UI button or a process initiating a file download.
+At the core of asynchronous programming, sits the event loop. The concept isn’t novel to Python. In fact,
+many programming languages enable asynchronous programming with event loops. In Python, event loops run
+asynchronous tasks and callbacks, perform network IO operations, run subprocesses and delegate costly
+function calls to pool of threads.
+
+One of the most common use cases you’ll find in the wild is of webservers implemented using asynchronous
+design. A webserver waits for an HTTP request to arrive and returns the matching resource. Those familiar
+with JavaScript would recall NodeJS works on the same principle: It is a webserver that runs an event loop
+to receive web requests in a single thread. Contrast that to webservers which create a new thread or worse
+fork a new process, to handle each web request. In some benchmarks, the asynchronous event loop based
+webservers outperformed multithreaded ones, which may seem counterintuitive.
+
+
+Running an event loop
+With Python 3.7+ the preferred way to run the event loop is to use the asyncio.run() method. The method is
+a blocking call till the passed-in coroutine finishes. A sample program appears below:
+
+Ex:
+async def do_something_important():
+    await asyncio.sleep(10)
+
+
+if __name__ == "__main__":
+    asyncio.run(do_something_important())
+
+Note: If you are working with Python 3.5, then the asyncio.run() API isn’t available. In that case, you
+explicitly retrieve the event loop using asyncio.new_event_loop() and run your desired coroutine using
+run_until_complete() defined on the loop object.
+
+
+** Running multiple event loops **
+You should never need to start an event loop yourself. Rather, utilize the higher-level APIs to submit
+coroutines. For instructional purposes, we’ll demonstrate launching event loop per thread. The example in
+the code sample below uses the API asyncio.new_event_loop() to get a new event loop and then use it to run
+another coroutine.
+
+Ex:
+import asyncio, random
+from threading import Thread
+from threading import current_thread
+
+
+async def do_something_important(sleep_for):
+    print("Is event loop running in thread {0} = {1}\n".format(current_thread().getName(),
+                                                         asyncio.get_event_loop().is_running()))
+
+    await asyncio.sleep(sleep_for)
+
+# Each spawned thread is running its own event loop.
+def launch_event_loops():
+    # get a new event loop
+    loop = asyncio.new_event_loop()
+
+    # set the event loop for the current thread
+    asyncio.set_event_loop(loop)
+
+    # run a coroutine on the event loop
+    loop.run_until_complete(do_something_important(random.randint(1, 5)))
+
+    # remember to close the loop
+    loop.close()
+
+
+if __name__ == "__main__":
+    t1 = Thread(target=launch_event_loops)
+    t2 = Thread(target=launch_event_loops)
+
+    t1.start()
+    t2.start()
+
+    print("Is event loop running in thread {0} = {1}\n".format(current_thread().getName(),
+                                                         asyncio.get_event_loop().is_running()))
+
+    t1.join()
+    t2.join()
+
+
+
+** Types of event loops **
+There are two types of event loops:
+a) SelectorEventLoop
+b) ProactorEventLoop
+
+The SelectorEventLoop is based on the selectors module and is the default loop on all platforms. The
+selectors module contains the poll() and the select() APIs that form the secret sauce behind the event loop.
+
+ProactorEventLoop, on the other hand, uses Windows’ I/O Completion Ports and is only supported on Windows.
+We’ll not go into the finer implementation details of the two types but end on a note here that both the
+type and the associated policy with a loop control the behavior of the event loop.
+
+** Futures and tasks **
+Future represents a computation that is either in progress or will get scheduled in the future. It is a
+special low-level awaitable object that represents an eventual result of an asynchronous operation. Don’t
+confuse threading.Future and asyncio.Future. The former is part of the threading module and doesn’t have
+an __iter__() method defined on it. asyncio.Future is an awaitable and can be used with the yield from
+statement. In general you shouldn’t need to deal with futures directly. They are usually exposed by
+libraries or asyncio APIs.
+
+For instructional purposes we’ll show an example that creates a future that is awaited by a coroutine.
+Study the snippet below:
+
+Ex:
+import asyncio
+from asyncio import Future
+
+
+async def bar(future):
+    print("bar will sleep for 3 seconds")
+    await asyncio.sleep(3)
+    print("bar resolving the future")
+    future.done()
+    future.set_result("future is resolved")
+
+
+async def foo(future):
+    print("foo will await the future")
+    await future
+    print("foo finds the future resolved")
+
+
+async def main():
+    future = Future()
+    results = await asyncio.gather(foo(future), bar(future))
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
+    print("main exiting")
+
+Both the coroutines are passed a future. The foo() coroutine awaits for the future to get resolved, while
+the bar() coroutine resolves the future after three seconds.
+
+** Tasks **
+Tasks are like futures, in fact, Task is a subclass of Future and can be created using the following methods:
+a) asyncio.create_task() introduced in Python 3.7 and preferred way of creating tasks. The method accepts
+coroutines and wraps them as tasks.
+
+b) loop.create_task() only accepts coroutines.
+
+c) asyncio.ensure_future() accepts futures, coroutines and any awaitable objects.
+
+Tasks wrap coroutines and run them in event loops. If a coroutine awaits on a Future, the Task suspends the
+execution of the coroutine and waits for the Future to complete. When the Future is done, the execution of
+the wrapped coroutine resumes.
+
+Event loops use cooperative scheduling, meaning the event loop runs one Task at a time. While a Task
+awaits for the completion of a Future, the event loop runs other tasks, callbacks, or performs IO
+operations. Tasks can also be cancelled.
+
+Ex:
+import asyncio
+from asyncio import Future
+
+
+async def bar(future):
+    print("bar will sleep for 3 seconds")
+    await asyncio.sleep(3)
+    print("bar resolving the future")
+    future.done()
+    future.set_result("future is resolved")
+
+
+async def foo(future):
+    print("foo will await the future")
+    await future
+    print("foo finds the future resolved")
+
+
+async def main():
+    future = Future()
+
+    loop = asyncio.get_event_loop()
+    t1 = loop.create_task(bar(future))
+    t2 = loop.create_task(foo(future))
+
+    await t2, t1
+
+
+if __name__ == "__main__":
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main())
+    print("main exiting")
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Chaining coroutines (old vs new)
+-------------------------------
+
+Old: chaining coroutines
+************************
+
+One of the most prominent uses of coroutines is to chain them to process data pipelines. You can chain
+coroutines in a fashion similar to how you pipe Unix commands in a shell.
+
+The idea is that the input passes through the first coroutine, which may perform some actions on the input
+and then passes on the modified data to the second coroutine which may perform additional operations on the
+input.
+
+The input travels through the chain of coroutines with each coroutine applying some operation on the input
+until the input reaches the last coroutine from where it is yielded to the original caller.
+
+Let’s consider the following example, which computes the values for the expression x2 + 3 for the first
+hundred natural numbers. You manually work the data pipeline using the next() method so you can setup a
+chain without worrying about the changes required to make it work with the asyncio’s event loop. The setup
+is as follows:
+
+a) The first coroutine produces natural numbers starting from 1.
+b) The second coroutine computes the square of each passed in input.
+c) The last function is a generator and adds 3 to the value passed into it and yields the result.
+
+Ex:
+def coro3(k):
+    yield (k + 3)
+
+
+def coro2(j):
+    j = j * j
+    yield from coro3(j)
+
+
+def coro1():
+    i = 0
+    while True:
+        yield from coro2(i)
+        i += 1
+
+
+if __name__ == "__main__":
+
+    # The first 100 natural numbers evaluated for the following expression
+    # x^2 + 3
+
+    cr = coro1()
+    for v in range(100):
+        print("f({0}) = {1}".format(v, next(cr)))
+
+In the example above, the end of the chain consists of a generator, however, this chain wouldn’t run with
+the asyncio’s event loop since it doesn’t work with generators. One way to fix this is to change the last
+generator into an ordinary function that returns a future with the result computed. The method coro3()
+would change to:
+
+def coro3(k):
+    f = Future()
+    f.set_result(k + 3)
+    f.done()
+    return f
+
+Yet another way is to tack on the @asyncio.coroutine onto the coro3() and return from it instead of
+yielding. The change would look like as follows:
+
+@asyncio.coroutine
+def coro3(k):
+    return k + 3
+
+An important caveat to consider is that if we instead used the @types.coroutine decorator the program would
+fail. This is because @asyncio.coroutine can convert an ordinary function into a coroutine
+but @types.coroutine can’t.
+
+Note that in the previous examples we didn’t decorate coro1() and coro2() with @asyncio.coroutine. Both the
+functions are generator-based coroutine functions because of the presence of yield from in their function
+bodies. Additionally, the appearance of the decorator isn’t strictly enforced but if you put on the
+decorators the program would still work correctly.
+
+
+New: Chaining native coroutines:
+*******************************
+Similar to generators and generator-based coroutines we can also chain native coroutines.
+
+import asyncio
+
+
+async def coro3(k):
+    return k + 3
+
+
+async def coro2(j):
+    j = j * j
+    res = await coro3(j)
+    return res
+
+
+async def coro1():
+    i = 0
+    while i < 100:
+        res = await coro2(i)
+        print("f({0}) = {1}".format(i, res))
+        i += 1
+
+
+if __name__ == "__main__":
+    # The first 100 natural numbers evaluated for the following expression
+    # x^2 + 3
+    cr = coro1()
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(cr)
+
+

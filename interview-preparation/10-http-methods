@@ -1,0 +1,66 @@
+HTTP Methods
+------------
+1. GET: Get requests are used to retrieve data from a server at the specified resource, since a GET request
+is only requesting data and not modifying any resources, it's considered a safe and idempotent.
+
+2. POST: POST requests are used to send data to the API server to crate a resource. The data sent to the
+server is stored in the request body of the HTTP request. POST request is non-idempotent, it mutates data
+on the backend server(By creating a resource). In POST, we can never update nay resource.
+
+3. PUT: PUT requests are used to send data to the API to create OR update a resource similar to POST but
+the difference is that PUT requests are idempotent that is calling, the same PUT request multiple times
+will always produce the same result.
+
+Difference between POST and PUT
+---------------------------------------------------------------------------------------------------------
+In POST, we can never update any resources, we can only use PUT method for resource update.
+
+Idempotent:
+----------                  /customer/1001
+x = 4 -->4  x=4 --> 4 client -------------> Resource
+                             <------------
+                             /customer/1001
+
+Means, if we execute things are multiple times and state doesn't change.
+
+Non-Idempotent
+--------------
+x++ -->1 x++ --> 2
+In every subsequent execution the value of x keep changing so this is term as non-idempotent.
+
+
+*****
+Request --> 1 URL
+Response --> 2nd URL, sends by server to the client and saying that, this is Next URL you can probably
+invoke OR maybe return URL also suggest that this is where Resource is available.
+
+If the request URL and response URL is same: Idempotent, if not same: Non-Idempotent
+
+---------------------------------------------------------------------------------------------------------
+
+4. PATCH: PATCH is similar to PUT
+PUT ---> For full update
+PATCH ---> For customized updates
+
+Ex:
+1. http://customer/1001 (PUT)
+{
+    name: Rohit,
+    amount: 100
+}
+
+In case, if we don't want to update amount only name.
+2. http://customer/1001(PATCH)
+{
+    name: "Pandey"
+}
+
+
+5. DELETE: DELETE the resource at the specified URLS
+
+6. HEAD: The HEAD method is almost identical to GET except without the response body. In other words, if
+GET/users returns a list of users, then HEAD/users will make the same request but won't get back the list
+of users.
+
+7. OPTIONS: Should return the data describing what other methods and operations the server supports at
+given URL.

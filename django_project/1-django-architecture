@@ -1,0 +1,15 @@
+Django architecture:
+--------------------
+
+- Django follows the Model View Template architecture which is based on the Model View Controller architecture.
+- The main difference between these two is that Django itself take care of the controller part.
+
+The ‘controller’ here is Django itself which sends the request to the appropriate view in accordance with the
+specified URL. This is why Django is referred to as MTV rather than MVC architecture.
+
+According to Django, the ‘view’ basically describes the data presented to the user. It does not deal with how the
+data looks but rather what the data actually is. Views are basically callback functions for the specified URL’s and
+these callback functions describe which data is presented.
+
+The ‘templates’ on the other hand deal with the presentation of data, thereby, separating the content from its
+presentation. In Django, views delegate to the templates to present the data.

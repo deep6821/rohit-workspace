@@ -1,0 +1,7 @@
+Explain how to Tune Kafka for Optimal Performance.
+
+- So, ways to tune Apache Kafka it is to tune its several components:
+
+1. Tuning Kafka Producers
+2. Kafka Brokers Tuning
+3. Tuning Kafka Consumers

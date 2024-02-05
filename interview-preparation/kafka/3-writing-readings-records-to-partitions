@@ -1,0 +1,58 @@
+https://medium.com/event-driven-utopia/understanding-kafka-topic-partitions-ae40f80552e8
+
+Writing records to partitions.
+*******************************
+How does a producer decide to which partition a record should go? There are three ways a producer can rule
+on that.
+
+1. Using a partition key to specify the partition:
+--------------------------------------------------
+A producer can use a partition key to direct messages to a specific partition. A partition key can be any
+value that can be derived from the application context. A unique device ID or a user ID will make a good
+partition key.
+
+By default, the partition key is passed through a hashing function, which creates the partition assignment.
+That assures that all records produced with the same key will arrive at the same partition. Specifying a
+partition key enables keeping related events together in the same partition and in the exact order in which
+they were sent.
+
+Key based partition assignment can lead to broker skew if keys aren’t well distributed.
+
+For example, when customer ID is used as the partition key, and one customer generates 90% of traffic,
+then one partition will be getting 90% of the traffic most of the time. On small topics, this is
+negligible, on larger ones, it can sometime take a broker down. When choosing a partition key, ensure that
+they are well distributed.
+
+2. Allowing Kafka to decide the partition:
+------------------------------------------
+If a producer doesn’t specify a partition key when producing a record, Kafka will use a round-robin
+partition assignment. Those records will be written evenly across all partitions of a particular topic.
+
+However, if no partition key is used, the ordering of records can not be guaranteed within a given
+partition.
+
+The key takeaway is to use a partition key to put related events together in the same partition in the
+exact order in which they were sent.
+
+3. Writing a custom partitioner:
+--------------------------------
+In some situations, a producer can use its own partitioner implementation that uses other business rules
+to do the partition assignment.
+
+
+Reading records from partitions:
+********************************
+Unlike the other pub/sub implementations, Kafka doesn’t push messages to consumers. Instead, consumers
+have to pull messages off Kafka topic partitions. A consumer connects to a partition in a broker, reads
+the messages in the order in which they were written.
+
+The offset of a message works as a consumer side cursor at this point. The consumer keeps track of which
+messages it has already consumed by keeping track of the offset of messages. After reading a message, the
+consumer advances its cursor to the next offset in the partition and continues. Advancing and remembering
+the last read offset within a partition is the responsibility of the consumer. Kafka has nothing to do
+with it.
+
+By remembering the offset of the last consumed message for each partition, a consumer can join a partition
+at the point in time they choose and resume from there. That is particularly useful for a consumer to
+resume reading after recovering from a crash.
+

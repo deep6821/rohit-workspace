@@ -1,0 +1,60 @@
+1. Some of the most notable applications of Kafka.
+
+- Some of the real-time applications are: Netflix, Mozilla, Oracle
+
+2. Features of Kafka Stream.
+
+- Some best features of Kafka Stream are
+
+a) Kafka Streams are highly scalable and fault-tolerant.
+b) Kafka deploys to containers, VMs, bare metal, cloud.
+c) We can say, Kafka streams are equally viable for small, medium, & large use cases.
+c) Also, it is fully in integration with Kafka security.
+d) Write standard Java applications.
+e) Exactly-once processing semantics.
+f) Moreover, there is no need of separate processing cluster.
+
+3. What do you mean by Stream Processing in Kafka?
+
+- The type of processing of data continuously, real-time,  concurrently, and in a record-by-record fashion is what
+we call Kafka Stream processing.
+
+4. What are the types of System tools?
+
+- There are three types of System tools:
+
+a) Kafka Migration Tool: It helps to migrate a broker from one version to another.
+
+b) Mirror Maker: Mirror Maker tool helps to offer to mirror of one Kafka cluster to another.
+
+c) Consumer Offset Checker: For the specified set of Topics as well as Consumer Group, it shows Topic, Partitions,
+Owner.
+
+5. What are Replication Tool and its types?
+
+- For the purpose of stronger durability and higher availability,  replication tool is available here.
+- Its types are −
+
+. Create Topic Tool
+. List Topic Tool
+. Add Partition Tool
+
+6. Explain some Kafka Streams real-time Use Cases.
+
+a) The New York Times: This company uses it to store and distribute, in real-time, published content to the various
+applications and systems that make it available to the readers.
+
+Basically, it uses Apache Kafka and the Kafka Streams both.
+
+b) Zalando: As an ESB (Enterprise Service Bus) as the leading online fashion retailer in Europe Zalando uses Kafka.
+
+c) LINE: Basically, to communicate to one another LINE application uses Apache Kafka as a central data hub for
+their services.
+
+7. What are Guarantees provided by Kafka?
+
+Ans. They are:
+
+- The order will be same for both the Messages sent by a producer to a particular topic partition. That
+- Moreover, the consumer instance sees records in the order in which they are stored in the log.
+- Also, we can tolerate up to N-1 server failures, even without losing any records committed to the log.

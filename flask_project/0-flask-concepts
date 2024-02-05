@@ -1,0 +1,40 @@
+What is Flask?
+--------------
+Flask is a web framework that provides libraries to build lightweight web applications in python. It is developed by
+Armin Ronacher who leads an international group of python enthusiasts (POCCO).
+
+It is based on WSGI toolkit and jinja2 template engine. Flask is considered as a micro framework.
+
+What is WSGI?
+-------------
+It is an acronym for web server gateway interface which is a standard for python web application development. It is
+considered as the specification for the universal interface between the web server and web application.
+
+
+Flask URL Building:
+------------------
+The "url_for()" function is used to build a URL to the specific function dynamically. The first argument is the name of
+the specified function, and then we can pass any number of keyword argument corresponding to the variable part of the URL
+
+Benefits of the Dynamic URL Building:
+-------------------------------------
+1. It avoids hard coding of the URLs.
+2. We can change the URLs dynamically instead of remembering the manually changed hard-coded URLs.
+3. URL building handles the escaping of special characters and Unicode data transparently.
+4. The generated paths are always absolute, avoiding unexpected behavior of relative paths in browsers.
+5. If your application is placed outside the URL root, for example, in /myapplication instead of /, url_for() properly
+handles that for you.
+
+***********************************************************************************************************************
+
+Jinga2 template:
+---------------
+Jinga 2 template engine provides some delimiters which can be used in the HTML to make it capable of dynamic data
+representation. The template system provides some HTML syntax which are placeholders for variables and expressions
+that are replaced by their actual values when the template is rendered.
+
+The jinga2 template engine provides the following delimiters to escape from the HTML.
+{% ... %} for statements
+{{ ... }} for expressions to print to the template output
+{# ... #} for the comments that are not included in the template output
+# ... ## for line statements
