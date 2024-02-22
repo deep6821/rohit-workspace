@@ -1,0 +1,187 @@
+Source: https://jwt.io/introduction/
+
+What is JSON Web Token?
+----------------------
+JSON Web Token (JWT) is an open standard (RFC 7519) that defines a compact and self-contained way for
+securely transmitting information between parties as a JSON object. This information can be verified
+and trusted because it is digitally signed. JWTs can be signed using a secret (with the HMAC algorithm)
+or a public/private key pair using RSA or ECDSA
+
+When should you use JSON Web Tokens?
+-----------------------------------
+Here are some scenarios where JSON Web Tokens are useful:
+1. Authorization: This is the most common scenario for using JWT.  Once the user is logged in,  each
+subsequent request will include the JWT, allowing the user to access routes, services, and resources
+that are permitted with that token. Single Sign On is a feature that widely uses JWT nowadays, because
+of its small overhead and its ability to be easily used across different domains.
+
+2. Information Exchange: JSON Web Tokens are a good way of securely transmitting information between parties.
+Because JWTs can be signed—for example, using public/private key pairs—you can be sure the senders are who
+they say they are. Additionally, as the signature is calculated using the header and the payload,  you can
+also verify that the content hasn't been tampered with.
+
+What is the JSON Web Token structure?
+------------------------------------
+In its compact form, JSON Web Tokens consist of three parts separated by dots (.), which are:
+1. Header -->> The header typically consists of two parts: the type of the token, which is JWT, and the
+signing algorithm being used, such as HMAC SHA256 or RSA.
+
+EX: {"alg": "HS256", "typ": "JWT"}
+Then, this JSON is Base64Url encoded to form the first part of the JWT.
+
+2. Payload -->> The second part of the token is the payload, which contains the claims. Claims are statements
+about an entity (typically, the user) and additional data. There are three types of claims: registered,
+public, and private claims.
+
+a) Registered claims: These are a set of predefined claims which are not mandatory but  recommended,  to
+provide a set of useful, interoperable claims. Some of them are: iss (issuer), exp  (expiration time),  sub
+(subject), aud (audience), and others. Notice that the claim names are only three characters long as JWT is
+meant to be compact.
+
+b) Public claims: These can be defined at will by those using JWTs. But to avoid collisions they should be
+defined in the IANA JSON Web Token Registry or be defined as a URI that contains a collision resistant
+namespace.
+
+c) Private claims: These are the custom claims created to share information between parties that agree on
+using them and are neither registered or public claims.
+
+Ex: {"sub": "1234567890", "name": "John Doe", "admin": true}
+The payload is then Base64Url encoded to form the second part of the JSON Web Token.
+
+3. Signature: To create the signature part you have to take the encoded header, the encoded payload, a
+secret, the algorithm specified in the header, and sign that.
+
+For example if you want to use the HMAC SHA256 algorithm, the signature will be created in the following way:
+  base64UrlEncode(header) + "." +
+  base64UrlEncode(payload),
+  secret)
+
+Putting all together: The output is three Base64-URL strings separated by dots that can be easily passed in
+HTML and HTTP environments, while being more compact when compared to XML-based standards such as SAML.
+
+
+How do JSON Web Tokens work?
+---------------------------
+In authentication, when the user successfully logs in using their credentials, a JSON Web Token will be
+returned. Since tokens are credentials, great care must be taken to prevent security issues. In general,
+you should not keep tokens longer than required.
+
+You also should not store sensitive session data in browser storage due to lack of security.
+
+Whenever the user wants to access a protected route or resource, the user agent should send the JWT,
+typically in the Authorization header using the Bearer schema. The content of the header should look like
+the following: Authorization: Bearer <token>
+
+This can be, in certain cases, a stateless authorization mechanism. The server's protected routes will
+check for a valid JWT in the Authorization header, and if it's present, the user will be allowed to access
+protected resources. If the JWT contains the necessary data, the need to query the database for certain
+operations may be reduced, though this may not always be the case.
+
+If the token is sent in the Authorization header, Cross-Origin Resource Sharing (CORS) won't be an issue as
+it doesn't use cookies.
+
+
+1. The application or client requests authorization to the authorization server. This is performed through
+one of the different authorization flows. For example, a typical OpenID Connect compliant web application
+will go through the /oauth/authorize endpoint using the authorization code flow.
+2. When the authorization is granted, the authorization server returns an access token to the application.
+3. The application uses the access token to access a protected resource (like an API).
+
+Why should we use JSON Web Tokens?
+---------------------------------
+Let's talk about the benefits of JSON Web Tokens (JWT) when compared to Simple Web Tokens (SWT) and
+Security Assertion Markup Language Tokens (SAML).
+
+- As JSON is less verbose than XML, when it is encoded its size is also smaller, making JWT more compact than
+SAML. This makes JWT a good choice to be passed in HTML and HTTP environments.
+
+- Security-wise, SWT can only be symmetrically signed by a shared secret using the HMAC algorithm. However,
+JWT and SAML tokens can use a public/private key pair in the form of a X.509 certificate for signing.
+Signing XML with XML Digital Signature without introducing obscure security holes is very difficult when
+compared to the simplicity of signing JSON.
+
+- JSON parsers are common in most programming languages because they map directly to objects. Conversely,
+XML doesn't have a natural document-to-object mapping. This makes it easier to work with JWT than SAML
+assertions.
+
+- Regarding usage, JWT is used at Internet scale. This highlights the ease of client-side processing of the
+JSON Web token on multiple platforms, especially mobile.
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+https://pyjwt.readthedocs.io/en/latest/usage.html
+1. In Python:
+------------
+- pip install pyjwt
+
+# Encoding & Decoding Tokens with HS256
+import jwt
+key = 'secret'
+encoded = jwt.encode({'some': 'payload'}, key, algorithm='HS256')
+print(encoded) # 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzb21lIjoicGF5bG9hZCJ9.4twFt5NiznN84AWoo1d7KO1T_yoc0Z6XOpOVswacPZg'
+decoded = jwt.decode(encoded, key, algorithms='HS256')
+print(decoded) # {'some': 'payload'}
+
+# Encoding & Decoding Tokens with RS256 (RSA)
+import jwt
+private_key = b'-----BEGIN PRIVATE KEY-----\nMIGEAgEAMBAGByqGSM49AgEGBS...'
+public_key = b'-----BEGIN PUBLIC KEY-----\nMHYwEAYHKoZIzj0CAQYFK4EEAC...'
+encoded = jwt.encode({'some': 'payload'}, private_key, algorithm='RS256')
+print(encoded) # 'eyJhbGciOiJIU...'
+decoded = jwt.decode(encoded, public_key, algorithms='RS256')
+print(encoded) # {'some': 'payload'}
+
+# Specifying Additional Headers
+jwt.encode({'some': 'payload'}, 'secret', algorithm='HS256', headers={'key': '230498151c214b788dd97f22b85410a5'})
+
+# Reading the Claimset without Validation
+jwt.decode(encoded, verify=False)
+
+# Reading Headers without Validation
+jwt.get_unverified_header(encoded)
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2. In Django
+
+
+
+"""
+
+Developing authentication and authorization using JSON Web Tokens (JWT) involves several steps. Below is a high-level overview of how you can implement JWT-based authentication and authorization in your application:
+
+1. Install Dependencies:
+First, you need to install the necessary libraries for JWT handling in your chosen programming language or framework. For example, in a Node.js application, you can use the jsonwebtoken library.
+
+2. User Registration and Login:
+Implement endpoints for user registration and login. When a user registers, you'll typically store their credentials securely (e.g., hashed passwords) in your database. When a user logs in with their credentials, you'll authenticate them against the stored credentials.
+
+3. JWT Generation on Login:
+Upon successful authentication, generate a JWT token containing the user's information (e.g., user ID, username) as well as any relevant metadata or permissions. Sign the JWT token using a secret key known only to your server.
+
+4. Token Issuance to the Client:
+Return the JWT token to the client (e.g., web browser, mobile app) as part of the login response. The client will store this token securely, typically in local storage or a cookie.
+
+5. Token Verification on Protected Routes:
+Implement middleware or logic to verify the JWT token on routes that require authentication. Extract the token from the request headers or cookies, and verify its signature using the same secret key used for signing. Ensure that the token is not expired and has not been tampered with.
+
+6. Authorization:
+Once the token is verified, extract the user's information from the token payload. Use this information to perform authorization checks on protected resources or endpoints. Determine whether the user has the necessary permissions to access the requested resource.
+
+7. Token Refresh (Optional):
+Implement a mechanism for token refresh to handle token expiration. When a JWT token expires, the client can send a refresh token (if applicable) to obtain a new JWT token without requiring the user to log in again.
+
+8. Logout:
+Implement a logout mechanism to invalidate the JWT token on the server side. This can involve maintaining a blacklist of revoked tokens or implementing token revocation using token identifiers (JTI).
+
+Additional Considerations:
+Token Expiration: Set an appropriate expiration time for JWT tokens to mitigate the risk of token misuse.
+
+HTTPS: Ensure that your application uses HTTPS to encrypt communication between the client and server, preventing token interception.
+
+Security Best Practices: Follow security best practices when handling JWT tokens, including proper key management, token validation, and protection against common vulnerabilities like XSS and CSRF.
+
+User Roles and Permissions: Use the JWT token payload to include user roles and permissions, enabling fine-grained authorization checks.
+
+By following these steps and best practices, you can develop authentication and authorization using JSON Web Tokens (JWT) in your application, providing a secure and scalable solution for user authentication and access control. 
+"""
