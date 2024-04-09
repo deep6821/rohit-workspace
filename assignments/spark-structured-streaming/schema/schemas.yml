@@ -1,0 +1,27 @@
+input_schema:
+  fields:
+    - name: name
+      type: string
+    - name: ingredients
+      type: string
+    - name: url
+      type: string
+    - name: image
+      type: string
+    - name: cookTime
+      type: string
+    - name: recipeYield
+      type: string
+    - name: datePublished
+      type: string
+    - name: prepTime
+      type: string
+    - name: description
+      type: string
+
+output_schema:
+  fields:
+    - name: difficulty
+      type: string
+    - name: avg_total_cooking_time
+      type: string

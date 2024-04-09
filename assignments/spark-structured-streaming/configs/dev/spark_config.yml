@@ -1,0 +1,7 @@
+# Spark Configuration
+app_name: "RecipeDataProcessing"
+executor_memory: "4g"
+executor_cores: 2
+max_cores: 4
+driver_memory: "2g"
+shuffle_partitions: 10

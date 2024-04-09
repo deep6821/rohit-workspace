@@ -1,0 +1,8 @@
+boto3
+confluent-kafka
+numpy
+pandas
+pylint
+pytest
+pyspark
+apache-airflow

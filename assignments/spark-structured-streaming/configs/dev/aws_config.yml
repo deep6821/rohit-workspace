@@ -1,0 +1,9 @@
+# AWS Configuration
+aws_access_key: "test-access-key-id"
+aws_secret_key: "test-secret-access-key"
+region: "us-east-1"
+bucket: "test-s3-bucket"
+input_path: "s3://test-s3-bucket/input"
+preprocessed_path: "s3://test-s3-bucket/preprocessed"
+checkpoint_location: "s3://test-s3-bucket/checkpoint"
+output_path: "s3://test-s3-bucket/output"

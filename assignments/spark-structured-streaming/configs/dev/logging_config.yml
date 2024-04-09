@@ -1,0 +1,19 @@
+# Logging Configuration
+logging:
+  level: INFO
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  datefmt: "%Y-%m-%d %H:%M:%S"
+  handlers:
+    cloudwatch:
+      level: INFO
+      class: logging.handlers.SysLogHandler
+      address: /dev/log
+      formatter: cloudwatch
+  formatters:
+    cloudwatch:
+      format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+      datefmt: "%Y-%m-%d %H:%M:%S"
+cloudwatch_logs:
+  region: "<your-region>"
+  log_group_name: "<your-log-group-name>"
+  log_stream_name: "<your-log-stream-name>"
