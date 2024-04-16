@@ -1,4 +1,6 @@
 from pyspark.sql import SparkSession
+
+from pyspark.sql.functions import col
 from pyspark.sql.types import StructType, StructField, IntegerType, StringType, DoubleType
 
 
@@ -17,7 +19,7 @@ data = [
     (7, "Alexander Garcia", 60000, "Human Resources"),
     (8, "Emma Martinez", 52000, "Engineering"),
     (9, "James Anderson", 68000, "Marketing"),
-    (10, "Sophia Taylor", 72000, "Finance")
+    (10, "", 72000, "Finance")
 ]
 # Define schema
 schema = StructType([
@@ -31,3 +33,9 @@ schema = StructType([
 
 df = spark.read.csv(csv_file, header=True, schema=schema)
 print(df.show())
+print("Before count: ", df.count())
+
+# df = df.dropna()
+df = df.filter(col("name").isNotNull())
+print(df.show())
+print("After count: ", df.count())
