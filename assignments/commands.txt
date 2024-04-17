@@ -43,3 +43,9 @@ docker exec -it 15debeb49ec2 /bin/bash    # docker exec -it <container_id> /bin/
 
 python: 3.9.2
 pyspark version: 3.3.0
+
+
+https://www.youtube.com/watch?v=9gtOkz4Ybdg
+
+https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.2.2/
+https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk/1.9.9/
