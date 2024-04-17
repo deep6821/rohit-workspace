@@ -30,11 +30,13 @@ docker images
 
 docker run -it hcl-pyspark-app:latest
 
+# docker run --privileged -it rohit-pyspark-app:latest
 --------------------------------
 
 docker ps -a
 docker start 15debeb49ec2
 docker exec -it 15debeb49ec2 /bin/bash    # docker exec -it <container_id> /bin/bash
+
 
 ---------------------------------------------------------------
 
