@@ -32,7 +32,7 @@ WORKDIR /app
 
 # Copy your PySpark script and any other files required
 COPY main.py /app
-COPY simple_storage_service.py /app
+COPY read_write_from_s3.py /app
 # COPY data.csv /app
 COPY .env /app/.env
 COPY requirements.txt /app
