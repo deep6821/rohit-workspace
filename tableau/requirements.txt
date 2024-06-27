@@ -1,0 +1,7 @@
+ipython==8.24.0
+openpyxl==3.1.2
+pandas==2.2.2
+psycopg2==2.9.9
+PyYAML==6.0.1
+sqlalchemy==2.0.30
+tableau-api-lib==0.1.50

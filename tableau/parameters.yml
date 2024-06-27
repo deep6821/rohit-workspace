@@ -1,0 +1,41 @@
+tableau_configuration:
+  prod:
+    server: https://prod-xyz.online.tableau.com/
+    api_version: "3.22"
+    username: rohitpandey
+    password: xyz
+    # personal_access_token_name: My Token
+    # personal_access_token_secret: abcd1234
+    site_name: temp
+    site_url: ""
+  projects:
+    - name: default
+      workbooks:
+        - name: Rohit's Sample Workbook
+          views:
+            - name: KPI
+              filters:
+                Education:
+                  - Associates Degree
+                  - Master's Degree
+              measure_aliases:
+                Total Employee Count: Employee Count
+                Total Active Employees: Active Employees
+    - name: Athena Dashboards
+      workbooks:
+        - name: Sales Performance Dashboard
+          views:
+            - name: New Prescriber Details
+              filters:
+                geography:
+                  - North America
+                  - Europe
+              measure_aliases:
+                Cancelled Patients- Cancelled PUMs (Nation): total_number_of_cancelled_pums
+            - name: Patient Overview
+              filters:
+                geography:
+                  - North America
+                  - Europe
+              measure_aliases:
+                Cancelled Patients- Cancelled PUMs (Nation): total_number_of_cancelled_pums
