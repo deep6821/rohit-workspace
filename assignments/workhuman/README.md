@@ -2,6 +2,16 @@
 
 This README provides instructions on how to run the data processing application, both directly using Python and using Docker.
 
+## Directory Structure
+```bash
+├── init.py                 # Python package initializer
+├── config.yml              # Configuration file for the application
+├── requirements.txt        # List of Python package dependencies
+├── data_processor.py       # Main script for data processing
+├── test_data_processor.py  # Unit tests for the data processor
+├── Dockerfile              # Instructions for building the Docker image
+└── README.md               # This file, containing project documentation
+```
 ## Prerequisites
 
 - Python 3.9 or later installed on your system (for direct Python execution)
