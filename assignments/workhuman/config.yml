@@ -1,0 +1,3 @@
+csv_url: "https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadDataset/EDA14/CSV/1.0/en"
+csv_output_path: "output_data.csv"
+parquet_output_path: "output_data.parquet"
